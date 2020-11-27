@@ -1,11 +1,14 @@
 ﻿using System.Windows;
 using SpaceTree.Libs;
+using SpaceTree.Libs.Cache;
+using SpaceTree.Libs.Config;
 
 namespace SpaceTree {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App {
+
         private void StartUp(object sender, StartupEventArgs e) {
             //TODO Load config & cache here
 

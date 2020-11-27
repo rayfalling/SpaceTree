@@ -22,4 +22,16 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+
+  <ItemGroup>
+    <None Remove="Resources\exclude.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\exclude.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
