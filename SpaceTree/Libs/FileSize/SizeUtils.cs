@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace SpaceTree.Libs.Model {
-    internal static class SizeHelper {
+    internal static class SizeUtils {
         private const int Rate = 1024;
 
         /// <summary>
