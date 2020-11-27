@@ -7,10 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceTree", "SpaceTree\Spac
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CrossPlatform|Any CPU = CrossPlatform|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D612C4EE-036D-4845-9E97-9E757850AECB}.CrossPlatform|Any CPU.ActiveCfg = Debug|Any CPU
+		{D612C4EE-036D-4845-9E97-9E757850AECB}.CrossPlatform|Any CPU.Build.0 = Debug|Any CPU
 		{D612C4EE-036D-4845-9E97-9E757850AECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D612C4EE-036D-4845-9E97-9E757850AECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D612C4EE-036D-4845-9E97-9E757850AECB}.Release|Any CPU.ActiveCfg = Release|Any CPU

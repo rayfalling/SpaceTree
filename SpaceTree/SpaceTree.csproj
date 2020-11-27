@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -7,7 +7,7 @@
     <StartupObject>SpaceTree.App</StartupObject>
     <Nullable>enable</Nullable>
     <Authors>Rayfalling</Authors>
-    <Version>0.0.1</Version>
+    <Version>0.1.0</Version>
     <Description>A disk space analyze tool for windows</Description>
     <PackageLicenseFile></PackageLicenseFile>
     <NeutralLanguage>zh-Hans</NeutralLanguage>
