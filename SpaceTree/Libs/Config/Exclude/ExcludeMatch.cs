@@ -1,6 +1,6 @@
-using System;
-using System.Linq;
+﻿using System;
 using System.Text.Json;
+using System.Threading.Tasks;
 using SpaceTree.Libs.Helper;
 
 namespace SpaceTree.Libs.Config.Exclude {
@@ -34,14 +34,34 @@ namespace SpaceTree.Libs.Config.Exclude {
         /// <summary>
         /// save config to file
         /// </summary>
-        protected override void SaveConfig() { throw new NotImplementedException(); }
+        public override void SaveConfig() {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// test if file path contains in exclude list
         /// </summary>
         /// <param name="path"></param>
-        public void TestFileMatch(string path) {
-            ExcludeConfig.FileExcludeList.AsParallel().Any(item => path.Contains(path));
+        /// <returns>false to not include</returns>
+        public bool TestFileMatch(string path) {
+            if (ExcludeConfig.FileExcludeList.Count == 0) return false;
+            var flag = false;
+            Parallel.ForEach(ExcludeConfig.FileExcludeList, file => { flag |= path.Contains(file); });
+            return flag;
+        }
+
+        /// <summary>
+        /// test if file path contains in exclude list
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns>false to not include</returns>
+        public bool TestDirectionMatch(string path) {
+            if (ExcludeConfig.DirectoryExcludeList.Count == 0) return false;
+            var flag = false;
+            Parallel.ForEach(ExcludeConfig.DirectoryExcludeList, file => {
+                flag |= path.Contains(file);
+            });
+            return flag;
         }
     }
 }

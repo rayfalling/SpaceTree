@@ -2,6 +2,17 @@
   "filename": [
   ],
   "directory": [
-    "^*(System Volume Information)*$"
+    "c:\\Windows",
+    "c:\\Recovery",
+    "c:\\Documents and Settings",
+    "c:\\Users\\Default",
+    "c:\\Users\\Public\\",
+    "c:\\Users\\All Users",
+    "c:\\Users\\Default User",
+    "c:\\ProgramData\\Microsoft",
+    "System Volume Information",
+    "WindowsApps",
+    "WpSystem\\S-1-",
+    "$RECYCLE.BIN\\S-1-"
   ]
 }

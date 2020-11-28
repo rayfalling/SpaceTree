@@ -33,7 +33,7 @@ namespace SpaceTree.Libs {
             return _instance!;
         }
 
-        public static void CheckCallee() {
+        private static void CheckCallee() {
             StackTrace trace = new StackTrace();
 
             var callCount = trace.GetFrames().AsParallel()
