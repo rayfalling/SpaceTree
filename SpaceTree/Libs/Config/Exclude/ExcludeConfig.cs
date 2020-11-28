@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace SpaceTree.Libs.Cache {
+namespace SpaceTree.Libs.Config.Exclude {
     internal class ExcludeConfig {
         [JsonPropertyName("filename"), JsonInclude]
         public List<string> FileExcludeList;

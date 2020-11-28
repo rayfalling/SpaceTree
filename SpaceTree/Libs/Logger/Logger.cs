@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace SpaceTree.Libs {
+namespace SpaceTree.Libs.Logger {
     /// <summary>
     /// 一个简单的日志记录类
     /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace SpaceTree.Libs {
+﻿namespace SpaceTree.Libs.Logger {
     internal enum LogLevel {
         Debug = 0,
         Info = 1,

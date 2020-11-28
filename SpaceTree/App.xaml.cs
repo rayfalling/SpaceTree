@@ -1,7 +1,6 @@
 ﻿using System.Windows;
-using SpaceTree.Libs;
-using SpaceTree.Libs.Cache;
-using SpaceTree.Libs.Config;
+using SpaceTree.Libs.Logger;
+using SpaceTree.Pages;
 
 namespace SpaceTree {
     /// <summary>

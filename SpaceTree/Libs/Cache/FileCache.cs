@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SpaceTree.Model {
+namespace SpaceTree.Libs.Cache {
     internal class FileCache {
         /// <summary>
         /// 文件路径

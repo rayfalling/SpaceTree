@@ -1,10 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using SpaceTree.Libs.Model;
-using SpaceTree.Model;
+using SpaceTree.Libs.Cache;
 
-namespace SpaceTree.Libs {
+namespace SpaceTree.Libs.Helper {
     internal class FileHelper {
         public static DirectoryCache LoadDirectory(string path) {
             var directoryCache = new DirectoryCache();

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using SpaceTree.Model;
+using SpaceTree.Libs.FileSize;
 
-namespace SpaceTree.Libs.Model {
+namespace SpaceTree.Libs.Cache {
     /// <summary>
     /// 目录信息缓存
     /// </summary>

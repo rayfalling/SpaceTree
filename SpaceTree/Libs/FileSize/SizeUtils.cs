@@ -1,6 +1,8 @@
 ﻿using System;
+using SpaceTree.Libs.Config.Exclude;
+using SpaceTree.Libs.Logger;
 
-namespace SpaceTree.Libs.Model {
+namespace SpaceTree.Libs.FileSize {
     internal static class SizeUtils {
         private const int Rate = 1024;
 
@@ -40,7 +42,6 @@ namespace SpaceTree.Libs.Model {
                 if (size >= 6)
                     break;
             }
-
             return (SizeLevel) rate;
         }
 
@@ -69,7 +70,7 @@ namespace SpaceTree.Libs.Model {
         /// <param name="sizeLevel"></param>
         private static void CheckSizeLevel(SizeLevel sizeLevel) {
             if (sizeLevel > SizeLevel.Exabyte)
-                Logger.GetInstance().Log(LogLevel.Error, "Incorrect SizeLevel");
+                Logger.Logger.GetInstance().Log(LogLevel.Error, "Incorrect SizeLevel");
         }
     }
 }

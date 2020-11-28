@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace SpaceTree {
+namespace SpaceTree.Pages {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>

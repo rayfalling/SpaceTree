@@ -1,4 +1,4 @@
-﻿namespace SpaceTree.Libs.Model {
+﻿namespace SpaceTree.Libs.FileSize {
     internal enum SizeLevel {
         Byte = 0,
         Kilobyte = 1,

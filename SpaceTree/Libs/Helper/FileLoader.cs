@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SpaceTree.Libs.Logger;
 
 namespace SpaceTree.Libs.Helper {
     internal class FileLoader {
@@ -14,9 +15,9 @@ namespace SpaceTree.Libs.Helper {
                 stream.Read(buffer, 0, buffer.Length);
                 return Encoding.UTF8.GetString(buffer);
             } catch (FileNotFoundException) {
-                Logger.GetInstance().Log(LogLevel.Error, $"Can't open file: {path}");
+                Logger.Logger.GetInstance().Log(LogLevel.Error, $"Can't open file: {path}");
             } catch (Exception e) {
-                Logger.GetInstance().Log(LogLevel.Error, e.Message);
+                Logger.Logger.GetInstance().Log(LogLevel.Error, e.Message);
             }
 
             return "";
