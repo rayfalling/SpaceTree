@@ -4,14 +4,16 @@ using SpaceTree.Libs.Logger;
 
 namespace SpaceTree.Libs.FileSize {
     internal static class SizeUtils {
-        private const int Rate = 1024;
+        private const double Rate = 1024;
 
         /// <summary>
         /// 获取格式化大小
         /// </summary>
         /// <param name="size">文件/文件夹大小</param>
         /// <returns></returns>
-        public static string GetPrettySize(long size) { return GetPrettySize(size, GetProperSizeLevel(size)); }
+        public static string GetPrettySize(long size) {
+            return GetPrettySize(size, GetProperSizeLevel(size));
+        }
 
         /// <summary>
         /// 获取格式化大小
@@ -20,13 +22,14 @@ namespace SpaceTree.Libs.FileSize {
         /// <param name="sizeLevel">大小级别</param>
         /// <returns></returns>
         public static string GetPrettySize(long size, SizeLevel sizeLevel) {
+            var tempSize = (double) size;
             var rate = (int) sizeLevel;
             while (rate != 0) {
-                size /= Rate;
+                tempSize /= Rate;
                 rate--;
             }
 
-            return $"{size} {PrettySizeLevel(sizeLevel)}";
+            return $"{tempSize:##.##} {PrettySizeLevel(sizeLevel)}";
         }
 
         /// <summary>
@@ -35,13 +38,15 @@ namespace SpaceTree.Libs.FileSize {
         /// <param name="size"></param>
         /// <returns></returns>
         public static SizeLevel GetProperSizeLevel(long size) {
+            var tempSize = (double) size;
             var rate = 0;
-            while (size / (double) Rate > Rate * 0.8) {
-                size /= Rate;
+            while ((tempSize / Rate) > 0.8) {
+                tempSize /= Rate;
                 rate++;
-                if (size >= 6)
+                if (rate >= 6)
                     break;
             }
+
             return (SizeLevel) rate;
         }
 
