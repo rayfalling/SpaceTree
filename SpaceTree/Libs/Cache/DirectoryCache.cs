@@ -11,27 +11,32 @@ namespace SpaceTree.Libs.Cache {
     /// </summary>
     internal class DirectoryCache {
         /// <summary>
-        /// 文件夹路径
+        /// full path
         /// </summary>
         public string Uri { get; set; }
 
         /// <summary>
-        /// 文件夹大小
+        /// size of files and sub directories
         /// </summary>
         public long Length { get; set; }
 
         /// <summary>
-        /// 上次统计日期
+        /// last access date
         /// </summary>
         public DateTime LastSeen { get; set; }
 
         /// <summary>
-        /// 当前目录文件信息
+        /// can access with current permission
+        /// </summary>
+        public bool Accessible { get; set; }
+
+        /// <summary>
+        /// files cache info located in current directory 
         /// </summary>
         public List<FileCache> FileCaches;
 
         /// <summary>
-        /// 子目录信息
+        /// sub directory cache info located in current directory 
         /// </summary>
         public List<DirectoryCache> SubDirectoryCaches;
 
@@ -39,6 +44,7 @@ namespace SpaceTree.Libs.Cache {
             Uri = uri;
             Length = length;
             LastSeen = lastSeen;
+            Accessible = true;
             FileCaches = new List<FileCache>();
             SubDirectoryCaches = new List<DirectoryCache>();
         }
@@ -47,12 +53,13 @@ namespace SpaceTree.Libs.Cache {
             Uri = "";
             Length = 0;
             LastSeen = DateTime.Now;
+            Accessible = true;
             FileCaches = new List<FileCache>();
             SubDirectoryCaches = new List<DirectoryCache>();
         }
 
         /// <summary>
-        /// 获取原始大小
+        /// get raw size in byte
         /// </summary>
         /// <returns></returns>
         public long GetRawSize() {
@@ -61,7 +68,7 @@ namespace SpaceTree.Libs.Cache {
         }
 
         /// <summary>
-        /// 获取格式化大小
+        /// get formatted size
         /// </summary>
         /// <returns></returns>
         public string GetFormatSize() {
