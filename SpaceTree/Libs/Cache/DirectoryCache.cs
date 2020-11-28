@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -69,7 +70,7 @@ namespace SpaceTree.Libs.Cache {
         }
 
         private void CheckSize() {
-            if (Length != 0 || (SubDirectoryCaches.Count == 0 && FileCaches.Count == 0)) return;
+            if (SubDirectoryCaches.Count == 0 && FileCaches.Count == 0) return;
             long currentSize = 0;
             Parallel.ForEach(FileCaches, fileCache => Interlocked.Add(ref currentSize, fileCache.Length));
             Parallel.ForEach(SubDirectoryCaches,

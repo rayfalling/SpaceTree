@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Text.Json;
 using SpaceTree.Libs.Helper;
@@ -13,14 +13,15 @@ namespace SpaceTree.Libs.Config.Exclude {
         protected override string ConfigPath => "Resources/exclude.json";
 
         /// <summary>
-        /// 
+        /// default construct
         /// </summary>
-        private ExcludeMatch() { LoadConfig(); }
+        public ExcludeMatch() {
+        }
 
         /// <summary>
         /// load config file
         /// </summary>
-        protected sealed override void LoadConfig() {
+        public sealed override void LoadConfig() {
             var json = FileLoader.ReadFile(ConfigPath);
 
             var options = new JsonSerializerOptions {

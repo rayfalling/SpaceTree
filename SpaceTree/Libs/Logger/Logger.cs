@@ -6,13 +6,13 @@ namespace SpaceTree.Libs.Logger {
     /// <summary>
     /// 一个简单的日志记录类
     /// </summary>
-    internal class Logger {
-        private static Logger? _log;
+    internal class Logger : SingletonFactory<Logger> {
+        // private static Logger? _log;
         private const string LogFilePrefix = "SpaceTree";
         private readonly StreamWriter _fileStreamWriter;
         private LogLevel _logLevel;
 
-        private Logger() {
+        public Logger() {
             _logLevel = LogLevel.Info;
             string logPath = AppDomain.CurrentDomain.BaseDirectory + "\\logs\\";
             _fileStreamWriter = new StreamWriter(new MemoryStream());
@@ -37,11 +37,11 @@ namespace SpaceTree.Libs.Logger {
             }
         }
 
-        public static Logger GetInstance() {
-            if (_log != null) return _log;
-            _log = new Logger();
-            return _log;
-        }
+        // public static Logger GetInstance() {
+        //     if (_log != null) return _log;
+        //     _log = new Logger();
+        //     return _log;
+        // }
 
         public void Log(LogLevel level, string logString) {
             if (!CheckLogLevel(level))
