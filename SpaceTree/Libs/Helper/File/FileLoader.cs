@@ -4,7 +4,7 @@ using System.Text;
 using SpaceTree.Libs.Logger;
 
 namespace SpaceTree.Libs.Helper.File {
-    internal class FileLoader {
+    internal static class FileLoader {
         public static string ReadFile(string path) {
             try {
                 FileStream stream = new FileStream(path, FileMode.Open);

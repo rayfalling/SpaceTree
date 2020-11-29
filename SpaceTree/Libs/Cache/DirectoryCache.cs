@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 using SpaceTree.Libs.FileSize;
 
 namespace SpaceTree.Libs.Cache {
@@ -17,7 +19,7 @@ namespace SpaceTree.Libs.Cache {
         /// <summary>
         /// size of files and sub directories
         /// </summary>
-        public long Length { get; set; }
+        public ulong Length { get; set; }
 
         /// <summary>
         /// last access date
@@ -39,7 +41,7 @@ namespace SpaceTree.Libs.Cache {
         /// </summary>
         public List<DirectoryCache> SubDirectoryCaches;
 
-        public DirectoryCache(string uri, long length, DateTime lastSeen) {
+        public DirectoryCache(string uri, ulong length, DateTime lastSeen) {
             Uri = uri;
             Length = length;
             LastSeen = lastSeen;
@@ -61,7 +63,7 @@ namespace SpaceTree.Libs.Cache {
         /// get raw size in byte
         /// </summary>
         /// <returns></returns>
-        public long GetRawSize() {
+        public ulong GetRawSize() {
             CheckSize();
             return Length;
         }
@@ -75,13 +77,34 @@ namespace SpaceTree.Libs.Cache {
             return SizeUtils.GetPrettySize(Length);
         }
 
+        /// <summary>
+        /// check size if is outdated and update
+        /// </summary>
         private void CheckSize() {
             if (SubDirectoryCaches.Count == 0 && FileCaches.Count == 0) return;
-            long currentSize = 0;
+            ulong currentSize = 0;
             Parallel.ForEach(FileCaches, fileCache => Interlocked.Add(ref currentSize, fileCache.Length));
             Parallel.ForEach(SubDirectoryCaches,
                 directoryCaches => Interlocked.Add(ref currentSize, directoryCaches.GetRawSize()));
             Length = currentSize;
+        }
+
+        /// <summary>
+        /// get the directory match given path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public DirectoryCache? GetSubDirectoryCache(string path) {
+            DirectoryCache? result = null;
+            if (!path.StartsWith(Uri)) return result;
+            if (path == Uri) return this;
+            foreach (var tmp in SubDirectoryCaches
+                                .Select(directoryCache => directoryCache.GetSubDirectoryCache(path))
+                                .Where(tmp => tmp != null)) {
+                result = tmp;
+            }
+
+            return result;
         }
     }
 }

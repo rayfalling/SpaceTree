@@ -11,12 +11,37 @@ using SpaceTree.Libs.Logger;
 
 namespace SpaceTree.Libs.Helper.File {
     internal static class FileSizeHelper {
+        #region Public Methods
+
+        /// <summary>
+        /// Main method to count given path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static DirectoryCache GetDirectorySizeCache(string path) {
+            var directoryCache = LoadDirectory(path);
+            var missingList = UnauthorizedAccessCache.GetInstance().GetAllMissingPath();
+
+            Task[] taskList = missingList
+                              .Select(directoryPath => new Task(() => {
+                                  DiskUsageTask(directoryPath, directoryCache);
+                              })).ToArray();
+            taskList.AsParallel().ForAll(task => task.Start());
+            Task.WaitAll(taskList);
+
+            return directoryCache;
+        }
+
+        #endregion
+
+        #region Protected Methods
+
         /// <summary>
         /// recursive load directory info
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static DirectoryCache LoadDirectory(string path) {
+        internal static DirectoryCache LoadDirectory(string path) {
             var directoryCache = new DirectoryCache();
             DirectoryInfo directory = new DirectoryInfo(path);
 
@@ -42,7 +67,7 @@ namespace SpaceTree.Libs.Helper.File {
             Parallel.ForEach(fileList,
                 fileInfo => {
                     lock (directoryCache.FileCaches) {
-                        directoryCache.FileCaches.Add(new FileCache(fileInfo.FullName, fileInfo.Length,
+                        directoryCache.FileCaches.Add(new FileCache(fileInfo.FullName, (ulong) fileInfo.Length,
                             DateTime.Now));
                     }
                 });
@@ -59,11 +84,46 @@ namespace SpaceTree.Libs.Helper.File {
         }
 
         /// <summary>
+        /// get directory size info form du.exe/du64.exe
+        /// we will use size not size on disk to keep same with
+        /// C# DirectoryInfo report
+        /// du.exe output example:
+        /// Files:        130552
+        /// Directories:  45942
+        /// Size:         16,113,239,255 bytes
+        /// Size on disk: 14,142,668,800 bytes 
+        /// </summary>
+        /// <param name="directoryCache"></param>
+        /// <returns></returns>
+        internal static DirectoryCache LoadDirectoryInfoByCmd(DirectoryCache directoryCache) {
+            var output = CmdHelper.ExecDiskUsage(directoryCache.Uri);
+
+            // check if du.exe return "", means a junction 
+            if (output == "") return directoryCache;
+
+            // make windows "\r\n" to "\n" only
+            output = output.Replace("\r", "");
+
+            var sizeStr = output.Split("\n")[2].Trim();
+            sizeStr = sizeStr.Replace("Size: ", "").Replace("bytes", "");
+
+            if (ulong.TryParse(sizeStr, out var size)) {
+                directoryCache.Length = size;
+            }
+
+            return directoryCache;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
         /// check application have permission to list directory
         /// </summary>
         /// <param name="directory"></param>
         /// <returns></returns>
-        public static bool CheckAccess(DirectoryInfo directory) {
+        internal static bool CheckAccess(DirectoryInfo directory) {
             try {
                 DirectorySecurity directorySecurity = directory.GetAccessControl();
                 var rules = directorySecurity.GetAccessRules(true, true, typeof(NTAccount));
@@ -100,9 +160,17 @@ namespace SpaceTree.Libs.Helper.File {
             }
         }
 
-        public static DirectoryCache LoadDirectoryInfoByCmd(DirectoryCache directoryCache) {
-            var output = CmdHelper.ExeCmd(directoryCache.Uri);
-            return directoryCache;
+        /// <summary>
+        /// Task for inaccessible path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="rootCache"></param>
+        private static void DiskUsageTask(string path, DirectoryCache rootCache) {
+            var currentCacheNode = rootCache.GetSubDirectoryCache(path);
+            if (currentCacheNode == null || currentCacheNode.Accessible) return;
+            LoadDirectoryInfoByCmd(currentCacheNode);
         }
+
+        #endregion
     }
 }

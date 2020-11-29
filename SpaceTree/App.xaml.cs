@@ -1,8 +1,8 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using SpaceTree.Libs.Cache;
 using SpaceTree.Libs.Config.Exclude;
 using SpaceTree.Libs.Helper;
+using SpaceTree.Libs.Helper.File;
 using SpaceTree.Libs.Logger;
 using SpaceTree.Pages;
 
@@ -25,8 +25,9 @@ namespace SpaceTree {
             ExcludeMatch.LoadConfig();
 
             //TODO Load config & cache here
+            //TODO judge junction in directories
 
-            var directoryCache = FileHelper.LoadDirectory("c:/");
+            var directoryCache = FileSizeHelper.GetDirectorySizeCache("c:/Users");;
             Logger.Log(LogLevel.Info, directoryCache.GetFormatSize());
             Logger.Log(LogLevel.Info, UnauthorizedAccessCache.GetInstance().GetMissCount().ToString());
 

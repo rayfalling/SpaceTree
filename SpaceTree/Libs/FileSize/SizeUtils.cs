@@ -11,7 +11,7 @@ namespace SpaceTree.Libs.FileSize {
         /// </summary>
         /// <param name="size">文件/文件夹大小</param>
         /// <returns></returns>
-        public static string GetPrettySize(long size) {
+        public static string GetPrettySize(ulong size) {
             return GetPrettySize(size, GetProperSizeLevel(size));
         }
 
@@ -21,7 +21,7 @@ namespace SpaceTree.Libs.FileSize {
         /// <param name="size">文件/文件夹大小</param>
         /// <param name="sizeLevel">大小级别</param>
         /// <returns></returns>
-        public static string GetPrettySize(long size, SizeLevel sizeLevel) {
+        public static string GetPrettySize(ulong size, SizeLevel sizeLevel) {
             var tempSize = (double) size;
             var rate = (int) sizeLevel;
             while (rate != 0) {
@@ -37,7 +37,7 @@ namespace SpaceTree.Libs.FileSize {
         /// </summary>
         /// <param name="size"></param>
         /// <returns></returns>
-        public static SizeLevel GetProperSizeLevel(long size) {
+        public static SizeLevel GetProperSizeLevel(ulong size) {
             var tempSize = (double) size;
             var rate = 0;
             while ((tempSize / Rate) > 0.8) {

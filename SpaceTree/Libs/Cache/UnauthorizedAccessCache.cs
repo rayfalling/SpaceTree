@@ -4,11 +4,13 @@ using System.Linq;
 
 namespace SpaceTree.Libs.Cache {
     internal class UnauthorizedAccessCache : SingletonFactory<UnauthorizedAccessCache> {
-        internal Hashtable Hashtable;
+        private readonly Hashtable _hashtable;
 
         public UnauthorizedAccessCache() {
-            Hashtable = new Hashtable();
+            _hashtable = new Hashtable();
         }
+
+        #region Public Methods
 
         /// <summary>
         /// add path which is not accessible when search
@@ -16,9 +18,9 @@ namespace SpaceTree.Libs.Cache {
         /// <param name="parent">key</param>
         /// <param name="path"></param>
         public void InsertMissPath(string parent, string path) {
-            if (!Hashtable.ContainsKey(parent))
-                Hashtable[parent] = new List<string>();
-            (Hashtable[parent] as List<string>)?.Add(path);
+            if (!_hashtable.ContainsKey(parent))
+                _hashtable[parent] = new List<string>();
+            (_hashtable[parent] as List<string>)?.Add(path);
         }
 
         /// <summary>
@@ -29,11 +31,11 @@ namespace SpaceTree.Libs.Cache {
         /// <returns></returns>
         public int GetMissCount(string key = "") {
             if (key == "") {
-                return Hashtable.Keys.Cast<object>()
-                                .Sum(hashtableKey => (Hashtable[hashtableKey] as List<string>)!.Count);
+                return _hashtable.Keys.Cast<object>()
+                                 .Sum(hashtableKey => (_hashtable[hashtableKey] as List<string>)!.Count);
             }
 
-            return (Hashtable[key] as List<string>)?.Count ?? 0;
+            return (_hashtable[key] as List<string>)?.Count ?? 0;
         }
 
         /// <summary>
@@ -42,7 +44,27 @@ namespace SpaceTree.Libs.Cache {
         /// <param name="key"></param>
         /// <returns></returns>
         public List<string> GetInaccessiblePath(string key) {
-            return Hashtable[key] as List<string> ?? new List<string>();
+            return _hashtable[key] as List<string> ?? new List<string>();
         }
+
+        /// <summary>
+        /// get inaccessible path list in all keys
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetAllMissingPath() {
+            List<string> missingList = new List<string>();
+            foreach (var key in _hashtable.Keys) {
+                missingList.AddRange((_hashtable[key] as List<string> ?? new List<string>()));
+            }
+
+            return missingList;
+        }
+
+        /// <summary>
+        /// clear stored values and keys
+        /// </summary>
+        public void Clear() => _hashtable.Clear();
+
+        #endregion
     }
 }

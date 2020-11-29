@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 using SpaceTree.Libs.Logger;
 
 namespace SpaceTree.Libs.Helper.Cmd {
-    internal class CmdHelper {
-        // ReSharper disable once StringLiteralTypo
-        private static string _pageCommand = @"chcp 437";
+    internal static class CmdHelper {
+        // ReSharper disable StringLiteralTypo
+        private static string _pageCommand = "chcp 437";
+        // ReSharper restore StringLiteralTypo
         #if WIN32
-        private static string _commandName = @"Resources/du/du.exe";
+        private static string _commandName = @"Resources\du\du.exe";
         #elif WIN64
-        private static string _commandName = @"Resources/du/du64.exe";
+        private static string _commandName = @"Resources\du\du64.exe";
         #endif
-        private static string _commandList = @" -q -nobanner -accepteula ";
+        // ReSharper disable StringLiteralTypo
+        private static string _commandList = "-q -nobanner -accepteula ";
+        // ReSharper restore StringLiteralTypo
 
         /// <summary>
         /// execute du64.exe
@@ -31,14 +34,12 @@ namespace SpaceTree.Libs.Helper.Cmd {
                         RedirectStandardInput = true,
                         RedirectStandardError = true,
                         RedirectStandardOutput = true,
-                        Arguments = _commandList + path
+                        Arguments = _commandList + "\"" + path + "\""
                     }
                 };
                 if (!p.Start())
                     throw new ArgumentException("Unable to start external tools.");
                 p.StandardInput.AutoFlush = true;
-                // p.StandardInput.WriteLine(_pageCommand);
-                // p.StandardInput.WriteLine(_commandList + path);
                 string output = p.StandardOutput.ReadToEnd();
                 p.WaitForExit();
                 p.Close();
