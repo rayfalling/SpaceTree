@@ -6,10 +6,16 @@ using System.Security.Principal;
 using System.Threading.Tasks;
 using SpaceTree.Libs.Cache;
 using SpaceTree.Libs.Config.Exclude;
+using SpaceTree.Libs.Helper.Cmd;
 using SpaceTree.Libs.Logger;
 
-namespace SpaceTree.Libs.Helper {
-    internal class FileHelper {
+namespace SpaceTree.Libs.Helper.File {
+    internal static class FileSizeHelper {
+        /// <summary>
+        /// recursive load directory info
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static DirectoryCache LoadDirectory(string path) {
             var directoryCache = new DirectoryCache();
             DirectoryInfo directory = new DirectoryInfo(path);
@@ -52,6 +58,11 @@ namespace SpaceTree.Libs.Helper {
             return directoryCache;
         }
 
+        /// <summary>
+        /// check application have permission to list directory
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <returns></returns>
         public static bool CheckAccess(DirectoryInfo directory) {
             try {
                 DirectorySecurity directorySecurity = directory.GetAccessControl();
@@ -87,6 +98,11 @@ namespace SpaceTree.Libs.Helper {
                 Logger.Logger.GetInstance().Log(LogLevel.Warning, $"Can't access directory: \"{directory.FullName}\"");
                 return false;
             }
+        }
+
+        public static DirectoryCache LoadDirectoryInfoByCmd(DirectoryCache directoryCache) {
+            var output = CmdHelper.ExeCmd(directoryCache.Uri);
+            return directoryCache;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using SpaceTree.Libs.Helper;
+using SpaceTree.Libs.Helper.File;
 
 namespace SpaceTree.Libs.Config.Exclude {
     internal class ExcludeMatch : Config<ExcludeMatch> {

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using SpaceTree.Libs.Logger;
 
-namespace SpaceTree.Libs.Helper {
+namespace SpaceTree.Libs.Helper.File {
     internal class FileLoader {
         public static string ReadFile(string path) {
             try {
