@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using SpaceTree.Libs.Cache;
 using SpaceTree.Libs.Config.Exclude;
-using SpaceTree.Libs.Helper;
 using SpaceTree.Libs.Helper.File;
 using SpaceTree.Libs.Logger;
 using SpaceTree.Pages;
