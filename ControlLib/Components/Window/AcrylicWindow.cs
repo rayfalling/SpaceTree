@@ -1,8 +1,17 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace ControlLib
-{
+namespace ControlLib.Components.Window {
     /// <summary>
     /// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.
     ///
@@ -10,14 +19,14 @@ namespace ControlLib
     /// Add this XmlNamespace attribute to the root element of the markup file where it is 
     /// to be used:
     ///
-    ///     xmlns:MyNamespace="clr-namespace:ControlLib.Components.AcrylicWindow"
+    ///     xmlns:MyNamespace="clr-namespace:ControlLib.Components.Window"
     ///
     ///
     /// Step 1b) Using this custom control in a XAML file that exists in a different project.
     /// Add this XmlNamespace attribute to the root element of the markup file where it is 
     /// to be used:
     ///
-    ///     xmlns:MyNamespace="clr-namespace:ControlLib.Components.AcrylicWindow;assembly=ControlLib.Components.AcrylicWindow"
+    ///     xmlns:MyNamespace="clr-namespace:ControlLib.Components.Window;assembly=ControlLib.Components.Window"
     ///
     /// You will also need to add a project reference from the project where the XAML file lives
     /// to this project and Rebuild to avoid compilation errors:
@@ -32,11 +41,10 @@ namespace ControlLib
     ///     <MyNamespace:AcrylicWindow/>
     ///
     /// </summary>
-    public class AcrylicWindow : Control
-    {
-        static AcrylicWindow()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(AcrylicWindow), new FrameworkPropertyMetadata(typeof(AcrylicWindow)));
+    public class AcrylicWindow : System.Windows.Window {
+        static AcrylicWindow() {
+            var type = typeof(AcrylicWindow);
+            DefaultStyleKeyProperty.OverrideMetadata(type, new FrameworkPropertyMetadata(type));
         }
     }
 }
