@@ -25,9 +25,11 @@ namespace ControlLib.Components.Theme {
 
 
             if (e.OldItems != null) {
-                foreach (ThemeDictionary item in e.OldItems) {
-                    _previousList.Remove(item);
-                    item.PropertyChanged -= ItemPropertyChanged;
+                foreach (ThemeDictionary? item in e.OldItems) {
+                    if (item != null) {
+                        _previousList.Remove(item);
+                        item.PropertyChanged -= ItemPropertyChanged;
+                    }
                 }
             }
 

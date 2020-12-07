@@ -30,7 +30,7 @@ namespace ControlLib.Components.Theme {
             if (systemParameter != "ImmersiveColorSet") return IntPtr.Zero;
             AppTheme = GetAppTheme();
             WindowsTheme = GetWindowsTheme();
-            ThemeChanged(null, null!);
+            ThemeChanged?.Invoke(null, null!);
             handled = true;
             return IntPtr.Zero;
         }
@@ -87,13 +87,13 @@ namespace ControlLib.Components.Theme {
 
         #region Events
 
-        public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged;
+        public static event EventHandler<PropertyChangedEventArgs>? StaticPropertyChanged;
 
         protected static void OnStaticPropertyChanged([CallerMemberName] string propertyName = null!) {
             StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(propertyName));
         }
 
-        public static event EventHandler ThemeChanged;
+        public static event EventHandler? ThemeChanged;
 
         #endregion
     }

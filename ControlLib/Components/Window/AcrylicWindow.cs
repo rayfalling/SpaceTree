@@ -105,7 +105,7 @@ namespace ControlLib.Components.Window {
             win.CommandBindings.Add(new CommandBinding(SystemCommands.RestoreWindowCommand,
                 (_, __) => { SystemCommands.RestoreWindow(win); }));
 
-            void OnContentRendered(object sender, EventArgs e) {
+            void OnContentRendered(object? sender, EventArgs e) {
                 if (win.SizeToContent != SizeToContent.Manual) {
                     win.InvalidateMeasure();
                 }

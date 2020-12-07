@@ -194,16 +194,15 @@
                 BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=BorderBrush}"
                 BorderThickness="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path= BorderThickness}"
                 Background="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=Background}">
-            <!-- Title bar area -->
-            <Grid>
+            <!-- Title bar area, Margin Top -1 to override system board -->
+            <Grid Margin="0,-1,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <ContentPresenter x:Name="windowContent" Grid.Row="0" Grid.RowSpan="2" />
-                <ResizeGrip x:Name="resizeGrip" Grid.Row="1"
-                            HorizontalAlignment="Right" IsTabStop="False" VerticalAlignment="Bottom"
-                            Visibility="Collapsed" />
+                <ResizeGrip x:Name="resizeGrip" Grid.Row="1" HorizontalAlignment="Right" IsTabStop="False"
+                            VerticalAlignment="Bottom" Visibility="Collapsed" />
                 <Grid Grid.Row="0" x:Name="captionGrid"
                       TextBlock.Foreground="{DynamicResource SystemBaseHighColorBrush}">
                     <Grid.ColumnDefinitions>
@@ -225,8 +224,7 @@
                                VerticalAlignment="Center"
                                TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
 
-                    <ContentControl x:Name="customTitleBar"
-                                    Grid.Column="1"
+                    <ContentControl x:Name="customTitleBar" Grid.Column="1"
                                     Content="{Binding (window:AcrylicWindow.TitleBar), RelativeSource={RelativeSource AncestorType=Window}}" />
 
                     <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top"
@@ -319,7 +317,7 @@
         <Setter Property="Foreground" Value="{DynamicResource SystemControlAcrylicWindowForegroundBrush}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{Binding Path=(color:AccentColors.ImmersiveSystemAccentBrush)}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="ContentTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -347,8 +345,7 @@
                                     Height="{Binding ActualHeight, ElementName=captionGrid, FallbackValue=0}" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <AdornerDecorator x:Name="content"
-                                              Grid.Row="1">
+                            <AdornerDecorator x:Name="content" Grid.Row="1">
                                 <ContentControl Content="{Binding}" ClipToBounds="True" />
                             </AdornerDecorator>
                         </Grid>
@@ -370,6 +367,7 @@
                 </DataTemplate>
             </Setter.Value>
         </Setter>
+        <!-- <Setter Property="WindowStyle" Value="None" /> -->
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}"

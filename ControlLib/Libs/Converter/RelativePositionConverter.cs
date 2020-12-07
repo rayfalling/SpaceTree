@@ -5,13 +5,14 @@ using System.Windows;
 using System.Windows.Data;
 
 namespace ControlLib.Libs.Converter {
-    public class RectConverter : IMultiValueConverter {
+    public class RelativePositionConverter : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
-            if (values.Any(o => o == DependencyProperty.UnsetValue)) return null!;
-            var width = (double) values[0];
-            var height = (double) values[1];
-
-            return new Rect(0, 0, width, height);
+            if (values.Any(o => o == DependencyProperty.UnsetValue || o == null)) return new Point(0, 0);
+            var parent = values[0] as UIElement;
+            var ctrl = values[1] as UIElement;
+            var pointerPos = (Point) values[2];
+            var relativePos = parent?.TranslatePoint(pointerPos, ctrl);
+            return relativePos ?? new Point();
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) {

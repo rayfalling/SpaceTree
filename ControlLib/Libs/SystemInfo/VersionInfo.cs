@@ -12,6 +12,8 @@ namespace ControlLib.Libs.SystemInfo {
             Build = build;
         }
 
+        #region Override and Compare
+
         public bool Equals(VersionInfo? other) {
             return other is not null && Major == other.Major && Minor == other.Minor && Build == other.Build;
         }
@@ -31,7 +33,6 @@ namespace ControlLib.Libs.SystemInfo {
         public static bool operator !=(VersionInfo left, VersionInfo right) {
             return !(left == right);
         }
-
 
         public int CompareTo(VersionInfo? other) {
             return other switch {
@@ -69,6 +70,10 @@ namespace ControlLib.Libs.SystemInfo {
             return $"{Major}.{Minor}.{Build}";
         }
 
+        #endregion
+
+        #region Static
+
         public static VersionInfo Windows7 => new VersionInfo(6, 1, 7600);
         public static VersionInfo Windows7Sp1 => new VersionInfo(6, 1, 7601);
 
@@ -85,5 +90,7 @@ namespace ControlLib.Libs.SystemInfo {
         public static VersionInfo Windows101903 => new VersionInfo(10, 0, 18362);
         public static VersionInfo Windows102004 => new VersionInfo(10, 0, 19041);
         public static VersionInfo Windows1020H2 => new VersionInfo(10, 0, 19042);
+
+        #endregion
     }
 }

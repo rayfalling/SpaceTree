@@ -8,12 +8,12 @@ namespace ControlLib.Libs.SystemInfo {
             var registryKey =
                 Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\",
                     false);
-            if (registryKey == null) return default(VersionInfo);
+            if (registryKey == null) return default!;
 
             // get windows version
             var majorValue = registryKey.GetValue("CurrentMajorVersionNumber");
             var minorValue = registryKey.GetValue("CurrentMinorVersionNumber");
-            var buildValue = (string) registryKey.GetValue("CurrentBuild", 7600);
+            var buildValue = (string) (registryKey.GetValue("CurrentBuild") ?? 7600);
             var canReadBuild = int.TryParse(buildValue, out var build);
 
             // default version for system lower than 10.0.10240

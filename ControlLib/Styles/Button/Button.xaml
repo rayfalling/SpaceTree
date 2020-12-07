@@ -1,10 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mouseTracker="clr-namespace:ControlLib.Libs.MouseTracker"
                     xmlns:animations="clr-namespace:ControlLib.Animations"
                     xmlns:converter="clr-namespace:ControlLib.Libs.Converter"
-                    xmlns:local="clr-namespace:ControlLib.Components.Theme">
-    <mouseTracker:RelativePositionConverter x:Key="RelativePositionConverter" />
+                    xmlns:local="clr-namespace:ControlLib.Components.Theme"
+                    xmlns:reveal="clr-namespace:ControlLib.Libs.Reveal">
+    <converter:RelativePositionConverter x:Key="RelativePositionConverter" />
     <converter:HeightToRadiusConverter x:Key="HeightToRadiusConverter" />
     <converter:RectConverter x:Key="RectConverter" />
 
@@ -18,12 +18,12 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
-        <Setter Property="mouseTracker:RevealElement.MouseOverForeground" Value="{DynamicResource SystemBaseHighColorBrush}" />
-        <Setter Property="mouseTracker:RevealElement.MouseOverBackground" Value="#80808080" />
-        <Setter Property="mouseTracker:RevealElement.MouseOverBorderOpacity" Value="0.1" />
-        <Setter Property="mouseTracker:RevealElement.PressBorderOpacity" Value="0.2" />
-        <Setter Property="mouseTracker:RevealElement.BorderRadius" Value="0" />
-        <Setter Property="mouseTracker:RevealElement.PressTintBrush" Value="{DynamicResource SystemBaseLowColorBrush}" />
+        <Setter Property="reveal:RevealElement.MouseOverForeground" Value="{DynamicResource SystemBaseHighColorBrush}" />
+        <Setter Property="reveal:RevealElement.MouseOverBackground" Value="#80808080" />
+        <Setter Property="reveal:RevealElement.MouseOverBorderOpacity" Value="0.1" />
+        <Setter Property="reveal:RevealElement.PressBorderOpacity" Value="0.2" />
+        <Setter Property="reveal:RevealElement.BorderRadius" Value="0" />
+        <Setter Property="reveal:RevealElement.PressTintBrush" Value="{DynamicResource SystemBaseLowColorBrush}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -167,21 +167,21 @@
                         </VisualStateManager.VisualStateGroups>
 
                         <Border x:Name="background" Background="{TemplateBinding Background}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.BorderRadius)}"/>
+                                CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.BorderRadius)}"/>
                         <Border x:Name="pressTintLayer"
-                                Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.PressTintBrush)}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.BorderRadius)}"
+                                Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.PressTintBrush)}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.BorderRadius)}"
                                 Visibility="Hidden"/>
                         <Border x:Name="backgroundBorder"
                                 Opacity="0"
-                                CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.BorderRadius)}">
+                                CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.BorderRadius)}">
                             <Grid ClipToBounds="True">
-                                <Border x:Name="mouseoverLight" Background="{mouseTracker:RevealBrush Color=White, Size = 300,Opacity=0.2}"
-                                        CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.BorderRadius)}"/>
+                                <Border x:Name="mouseoverLight" Background="{reveal:RevealBrush Color=White, Size = 300,Opacity=0.2}"
+                                        CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.BorderRadius)}"/>
                                 <Rectangle x:Name="pressLight" >
                                     <Rectangle.Clip>
-                                        <RectangleGeometry RadiusX="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.BorderRadius)}"
-                                                           RadiusY="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.BorderRadius)}">
+                                        <RectangleGeometry RadiusX="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.BorderRadius)}"
+                                                           RadiusY="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.BorderRadius)}">
                                             <RectangleGeometry.Rect>
                                                 <MultiBinding Converter="{StaticResource RectConverter}">
                                                     <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}" Path="ActualWidth"/>
@@ -194,16 +194,16 @@
                                         <RadialGradientBrush x:Name="brush" MappingMode="Absolute" RadiusY="200" RadiusX="200">
                                             <RadialGradientBrush.Center>
                                                 <MultiBinding Converter="{StaticResource RelativePositionConverter}">
-                                                    <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}" Path="(mouseTracker:PointerTracker.RootObject)"/>
+                                                    <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}" Path="(reveal:PointerTracker.RootObject)"/>
                                                     <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}"/>
-                                                    <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}" Path="(mouseTracker:PointerTracker.Position)" />
+                                                    <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}" Path="(reveal:PointerTracker.Position)" />
                                                 </MultiBinding>
                                             </RadialGradientBrush.Center>
                                             <RadialGradientBrush.GradientOrigin>
                                                 <MultiBinding Converter="{StaticResource RelativePositionConverter}">
-                                                    <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}" Path="(mouseTracker:PointerTracker.RootObject)"/>
+                                                    <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}" Path="(reveal:PointerTracker.RootObject)"/>
                                                     <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}"/>
-                                                    <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}" Path="(mouseTracker:PointerTracker.Position)" />
+                                                    <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}" Path="(reveal:PointerTracker.Position)" />
                                                 </MultiBinding>
                                             </RadialGradientBrush.GradientOrigin>
                                             <GradientStop Color="Transparent" Offset="0"/>
@@ -218,7 +218,7 @@
                         <!-- Content -->
                         <Border BorderBrush="{x:Null}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.BorderRadius)}">
+                                CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.BorderRadius)}">
                             <ContentPresenter x:Name="contentPresenter" Focusable="False"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -231,29 +231,29 @@
                             <Border x:Name="borderMouseOver"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
-                                    Opacity="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.BorderOpacity)}"
-                                    CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.BorderRadius)}"/>
+                                    Opacity="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.BorderOpacity)}"
+                                    CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.BorderRadius)}"/>
 
                             <Border BorderBrush="{TemplateBinding BorderBrush}"
-                                    OpacityMask="{mouseTracker:RevealBrush Color=White,Size=70,Opacity=0.3}"
+                                    OpacityMask="{reveal:RevealBrush Color=White,Size=70,Opacity=0.3}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.BorderRadius)}"/>
+                                    CornerRadius="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.BorderRadius)}"/>
                         </Grid>
                     </Grid>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="background" Property="Background"
-                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.MouseOverBackground)}"/>
+                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.MouseOverBackground)}"/>
                             <Setter TargetName="contentPresenter" Property="TextBlock.Foreground"
-                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.MouseOverForeground)}"/>
+                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.MouseOverForeground)}"/>
                             <Setter TargetName="borderMouseOver" Property="Opacity"
-                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.MouseOverBorderOpacity)}"/>
+                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.MouseOverBorderOpacity)}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="pressTintLayer" Property="Visibility" Value="Visible" />
                             <Setter TargetName="borderMouseOver" Property="Opacity"
-                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(mouseTracker:RevealElement.PressBorderOpacity)}"/>
+                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=(reveal:RevealElement.PressBorderOpacity)}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -262,17 +262,17 @@
     </Style>
 
     <Style x:Key="ButtonAccentRevealStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonRevealStyle}">
-        <Setter Property="mouseTracker:RevealElement.MouseOverForeground" Value="{DynamicResource SystemAltHighColorBrush}" />
-        <Setter Property="mouseTracker:RevealElement.MouseOverBackground" Value="{x:Static local:AccentColors.ImmersiveSystemAccentBrush}" />
-        <Setter Property="mouseTracker:RevealElement.PressTintBrush" Value="{DynamicResource SystemAltLowColorBrush}" />
+        <Setter Property="reveal:RevealElement.MouseOverForeground" Value="{DynamicResource SystemAltHighColorBrush}" />
+        <Setter Property="reveal:RevealElement.MouseOverBackground" Value="{x:Static local:AccentColors.ImmersiveSystemAccentBrush}" />
+        <Setter Property="reveal:RevealElement.PressTintBrush" Value="{DynamicResource SystemAltLowColorBrush}" />
     </Style>
 
     <Style x:Key="ButtonRoundRevealStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonRevealStyle}">
-        <Setter Property="mouseTracker:RevealElement.BorderRadius" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource HeightToRadiusConverter}}" />
+        <Setter Property="reveal:RevealElement.BorderRadius" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource HeightToRadiusConverter}}" />
     </Style>
 
     <Style x:Key="ButtonRoundAccentRevealStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonAccentRevealStyle}">
-        <Setter Property="mouseTracker:RevealElement.BorderRadius" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource HeightToRadiusConverter}}" />
+        <Setter Property="reveal:RevealElement.BorderRadius" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource HeightToRadiusConverter}}" />
     </Style>
 
 </ResourceDictionary>
