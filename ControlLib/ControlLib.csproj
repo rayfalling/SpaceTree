@@ -1,8 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Styles\Assets\Images\noise.png" />
+    <Resource Include="Styles\Assets\Images\noiseBlack.png" />
+    <Resource Include="Styles\Assets\Images\noiseWhite.png" />
+  </ItemGroup>
 
 </Project>

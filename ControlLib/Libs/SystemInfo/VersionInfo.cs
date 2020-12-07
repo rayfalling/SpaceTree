@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ControlLib.DataModel.SystemInfo {
+namespace ControlLib.Libs.SystemInfo {
     internal class VersionInfo : IEquatable<VersionInfo>, IComparable<VersionInfo>, IComparable {
         public readonly int Major;
         public readonly int Minor;
@@ -12,11 +12,11 @@ namespace ControlLib.DataModel.SystemInfo {
             Build = build;
         }
 
-        public bool Equals(VersionInfo other) {
-            return other is { } && Major == other.Major && Minor == other.Minor && Build == other.Build;
+        public bool Equals(VersionInfo? other) {
+            return other is not null && Major == other.Major && Minor == other.Minor && Build == other.Build;
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             return (obj is VersionInfo other) && Equals(other);
         }
 
@@ -25,7 +25,7 @@ namespace ControlLib.DataModel.SystemInfo {
         }
 
         public static bool operator ==(VersionInfo left, VersionInfo right) {
-            return left is { } && left.Equals(right);
+            return left.Equals(right);
         }
 
         public static bool operator !=(VersionInfo left, VersionInfo right) {
@@ -33,24 +33,20 @@ namespace ControlLib.DataModel.SystemInfo {
         }
 
 
-        public int CompareTo(VersionInfo other) {
-            if (Major != other.Major) {
-                return Major.CompareTo(other.Major);
-            }
-
-            if (Minor != other.Minor) {
-                return Minor.CompareTo(other.Minor);
-            }
-
-            return Build != other.Build ? Build.CompareTo(other.Build) : 0;
+        public int CompareTo(VersionInfo? other) {
+            return other switch {
+                not null when Major != other.Major => Major.CompareTo(other.Major),
+                not null when Minor != other.Minor => Minor.CompareTo(other.Minor),
+                _ => other is not null && Build != other.Build ? Build.CompareTo(other.Build) : 0
+            };
         }
 
-        public int CompareTo(object obj) {
-            if (!(obj is VersionInfo other)) {
-                throw new ArgumentException();
+        public int CompareTo(object? obj) {
+            if (obj is VersionInfo other) {
+                return CompareTo(other);
             }
 
-            return CompareTo(other);
+            throw new ArgumentException("param is not VersionInfo");
         }
 
         public static bool operator <(VersionInfo left, VersionInfo right) {

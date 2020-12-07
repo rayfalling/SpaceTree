@@ -1,4 +1,4 @@
-﻿namespace ControlLib.Components.Window {
+﻿namespace ControlLib.Components.Window.Data {
     public enum TitleBarMode {
         Default,
         Extend,

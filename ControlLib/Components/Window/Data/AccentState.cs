@@ -1,6 +1,6 @@
 ﻿// ReSharper disable InconsistentNaming
 // ReSharper disable IdentifierTypo
-namespace ControlLib.DataModel.Window {
+namespace ControlLib.Components.Window.Data {
     internal enum AccentState {
         ACCENT_DISABLED = 0,
         ACCENT_ENABLE_GRADIENT = 1,

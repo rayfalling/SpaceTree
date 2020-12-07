@@ -26,9 +26,9 @@ namespace SpaceTree {
             //TODO Load config & cache here
             //TODO judge junction in directories
 
-            var directoryCache = FileSizeHelper.GetDirectorySizeCache("c:/Users");;
-            Logger.Log(LogLevel.Info, directoryCache.GetFormatSize());
-            Logger.Log(LogLevel.Info, UnauthorizedAccessCache.GetInstance().GetMissCount().ToString());
+            // var directoryCache = FileSizeHelper.GetDirectorySizeCache("c:/Users");;
+            // Logger.Log(LogLevel.Info, directoryCache.GetFormatSize());
+            // Logger.Log(LogLevel.Info, UnauthorizedAccessCache.GetInstance().GetMissCount().ToString());
 
             // Create main application window, starting minimized if specified
             MainWindow mainWindow = new MainWindow();

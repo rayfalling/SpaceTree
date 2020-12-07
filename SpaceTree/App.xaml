@@ -5,8 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--  FluentWPF Controls  -->
-                <ResourceDictionary Source="pack://application:,,,/ControlLib;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ControlLib;component/Styles/All.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

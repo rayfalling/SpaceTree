@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace ControlLib.DataModel.Window {
+namespace ControlLib.Components.Window.Data {
     [StructLayout(LayoutKind.Sequential)]
     internal struct WindowCompositionAttributeData {
         public WindowCompositionAttribute Attribute;

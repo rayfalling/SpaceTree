@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ControlLib.DataModel.SystemInfo {
+namespace ControlLib.Libs.SystemInfo {
     internal class SystemInfo {
         public static Lazy<VersionInfo> Version { get; } = new Lazy<VersionInfo>(GetVersionInfo);
 
