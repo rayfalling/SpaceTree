@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="SpaceTree.Libs.Controls.DiskCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:reveal="clr-namespace:ControlLib.Libs.Reveal;assembly=ControlLib"
+             mc:Ignorable="d" d:DesignHeight="160" d:DesignWidth="160">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style x:Key="DiskCardText" TargetType="TextBlock"
+                   BasedOn="{StaticResource BodyTextBlockStyle}">
+                <Setter Property="Width" Value="120" />
+                <Setter Property="Height" Value="16" />
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="TextAlignment" Value="Center" />
+            </Style>
+
+            <Style x:Key="ButtonStyle"  TargetType="Button" BasedOn="{StaticResource ButtonRevealStyle}">
+                <Setter Property="reveal:RevealElement.MouseOverBackground" Value="#60F0F0F0" />
+                <Setter Property="reveal:RevealElement.PressTintBrush" Value="Transparent" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Button Style="{StaticResource ButtonStyle}" Background="Transparent" Width="156" Height="156"
+            Margin="2,2,2,2">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image x:Name="DiskIcon" Width="64" Height="64" Margin="0,0,0,0" />
+            <TextBlock x:Name="DiskName" Style="{StaticResource DiskCardText}" />
+            <TextBlock x:Name="DiskUsage" Style="{StaticResource DiskCardText}" />
+            <TextBlock x:Name="DiskTotal" Style="{StaticResource DiskCardText}" />
+        </StackPanel>
+    </Button>
+</UserControl>

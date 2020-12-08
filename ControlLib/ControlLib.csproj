@@ -13,4 +13,13 @@
     <Resource Include="Styles\Assets\Images\noiseWhite.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Styles\Layout\Panel.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\Text\TextBox.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
 </Project>

@@ -36,9 +36,8 @@ namespace SpaceTree.Libs.Cache {
             DiskTotalSize = diskTotalSize;
         }
 
-        public string GetFormattedUsage() {
-            return $"Used: {SizeUtils.GetPrettySize(DiskTotalSize - DiskFreeSize)}, " +
-                   $"Total: {SizeUtils.GetPrettySize(DiskTotalSize)}";
-        }
+        public string GetFormattedUsage() { return $"Used: {SizeUtils.GetPrettySize(DiskTotalSize - DiskFreeSize)}"; }
+
+        public string GetFormattedTotal() { return $"Total: {SizeUtils.GetPrettySize(DiskTotalSize)}"; }
     }
 }

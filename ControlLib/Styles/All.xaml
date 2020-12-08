@@ -3,7 +3,9 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/ControlLib;component/Styles/Colors/Colors.xaml" />
         <ResourceDictionary Source="/ControlLib;component/Styles/Text/TextBlock.xaml" />
+        <ResourceDictionary Source="/ControlLib;component/Styles/Text/TextBox.xaml" />
         <ResourceDictionary Source="/ControlLib;component/Styles/Button/Button.xaml" />
+        <ResourceDictionary Source="/ControlLib;component/Styles/Layout/Panel.xaml" />
         <ResourceDictionary Source="/ControlLib;component/Styles/Window/Window.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

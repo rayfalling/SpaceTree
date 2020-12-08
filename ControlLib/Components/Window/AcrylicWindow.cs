@@ -43,9 +43,13 @@ namespace ControlLib.Components.Window {
             var type = typeof(AcrylicWindow);
             DefaultStyleKeyProperty.OverrideMetadata(type, new FrameworkPropertyMetadata(type));
 
+            AccentColorProperty = AcrylicElement.AccentColorProperty.AddOwner(
+                typeof(AcrylicWindow),
+                new FrameworkPropertyMetadata(Color.FromArgb(0, 255, 255, 255), FrameworkPropertyMetadataOptions.Inherits)
+            );
             TintColorProperty = AcrylicElement.TintColorProperty.AddOwner(
                 typeof(AcrylicWindow),
-                new FrameworkPropertyMetadata(Colors.White, FrameworkPropertyMetadataOptions.Inherits)
+                new FrameworkPropertyMetadata(Colors.Azure, FrameworkPropertyMetadataOptions.Inherits)
             );
             TintOpacityProperty = AcrylicElement.TintOpacityProperty.AddOwner(
                 typeof(AcrylicWindow),
@@ -53,7 +57,7 @@ namespace ControlLib.Components.Window {
             );
             NoiseOpacityProperty = AcrylicElement.NoiseOpacityProperty.AddOwner(
                 typeof(AcrylicWindow),
-                new FrameworkPropertyMetadata(0.03, FrameworkPropertyMetadataOptions.Inherits)
+                new FrameworkPropertyMetadata(0.02, FrameworkPropertyMetadataOptions.Inherits)
             );
             FallbackColorProperty = AcrylicElement.FallbackColorProperty.AddOwner(
                 typeof(AcrylicWindow),
@@ -81,7 +85,7 @@ namespace ControlLib.Components.Window {
             base.OnApplyTemplate();
             EnableBlur(this);
 
-            if (this.GetTemplateChild("captionGrid") is FrameworkElement caption) {
+            if (GetTemplateChild("captionGrid") is FrameworkElement caption) {
                 caption.SizeChanged += (s, e) => {
                     var chrome = WindowChrome.GetWindowChrome(this);
                     chrome.CaptionHeight = e.NewSize.Height;
@@ -91,10 +95,10 @@ namespace ControlLib.Components.Window {
 
         #region Inner Methods
 
-        internal static void EnableBlur(System.Windows.Window win) {
+        internal static void StaticEnableBlur(System.Windows.Window win, uint accentColor = 0x00FFFFFF) {
             var windowHelper = new WindowInteropHelper(win);
 
-            AcrylicHelper.EnableBlur(windowHelper.Handle);
+            AcrylicHelper.EnableBlur(windowHelper.Handle, accentColor);
 
             win.CommandBindings.Add(new CommandBinding(SystemCommands.CloseWindowCommand,
                 (_, __) => { SystemCommands.CloseWindow(win); }));
@@ -105,20 +109,30 @@ namespace ControlLib.Components.Window {
             win.CommandBindings.Add(new CommandBinding(SystemCommands.RestoreWindowCommand,
                 (_, __) => { SystemCommands.RestoreWindow(win); }));
 
-            void OnContentRendered(object? sender, EventArgs e) {
+            void ContentRendered(object? sender, EventArgs e) {
                 if (win.SizeToContent != SizeToContent.Manual) {
                     win.InvalidateMeasure();
                 }
 
-                win.ContentRendered -= OnContentRendered;
+                win.ContentRendered -= ContentRendered;
             }
 
-            win.ContentRendered += OnContentRendered;
+            win.ContentRendered += ContentRendered;
+        }
+
+        internal void EnableBlur(System.Windows.Window win) {
+            var accentColor = (uint) (AccentColor.A << 24 | AccentColor.R << 18 | AccentColor.G << 12 | AccentColor.B);
+            StaticEnableBlur(win, accentColor);
         }
 
         #endregion
 
         #region Property Back Store
+
+        /// <summary>
+        /// Accent Color
+        /// </summary>
+        public static readonly DependencyProperty AccentColorProperty;
 
         /// <summary>
         /// Tint Color
@@ -164,8 +178,16 @@ namespace ControlLib.Components.Window {
 
         #region Dependency Property
 
-        public System.Windows.Media.Color TintColor {
-            get => (System.Windows.Media.Color) GetValue(TintColorProperty);
+        public Color AccentColor {
+            get => (Color) GetValue(AccentColorProperty);
+            set {
+                SetValue(AccentColorProperty, value);
+                EnableBlur(this);
+            }
+        }
+
+        public Color TintColor {
+            get => (Color) GetValue(TintColorProperty);
             set => SetValue(TintColorProperty, value);
         }
 
@@ -179,8 +201,8 @@ namespace ControlLib.Components.Window {
             set => SetValue(NoiseOpacityProperty, value);
         }
 
-        public System.Windows.Media.Color FallbackColor {
-            get => (System.Windows.Media.Color) GetValue(FallbackColorProperty);
+        public Color FallbackColor {
+            get => (Color) GetValue(FallbackColorProperty);
             set => SetValue(FallbackColorProperty, value);
         }
 
@@ -208,13 +230,9 @@ namespace ControlLib.Components.Window {
 
         #region Attached Property
 
-        public static bool GetEnabled(DependencyObject obj) {
-            return (bool) obj.GetValue(EnabledProperty);
-        }
+        public static bool GetEnabled(DependencyObject obj) { return (bool) obj.GetValue(EnabledProperty); }
 
-        public static void SetEnabled(DependencyObject obj, bool value) {
-            obj.SetValue(EnabledProperty, value);
-        }
+        public static void SetEnabled(DependencyObject obj, bool value) { obj.SetValue(EnabledProperty, value); }
 
         public static readonly DependencyProperty EnabledProperty = DependencyProperty.RegisterAttached(
             "Enabled",
@@ -234,13 +252,21 @@ namespace ControlLib.Components.Window {
             var style = dic["AcrylicWindowStyle"] as Style;
             win.Style = style;
 
-            win.Loaded += (_, __) => { EnableBlur(win); };
-            if (win.IsLoaded) EnableBlur(win);
+            win.Loaded += (_, __) => { StaticEnableBlur(win); };
+            if (win.IsLoaded) StaticEnableBlur(win);
         }
 
         #endregion
 
         #region Acrylic Elements Methods
+
+        public static uint GetAccentColor(DependencyObject obj) {
+            return (uint) obj.GetValue(AcrylicElement.AccentColorProperty);
+        }
+
+        public static void SetAccentColor(DependencyObject obj, Color value) {
+            obj.SetValue(AcrylicElement.AccentColorProperty, value);
+        }
 
         public static double GetNoiseOpacity(DependencyObject obj) {
             return (double) obj.GetValue(AcrylicElement.NoiseOpacityProperty);
@@ -258,19 +284,19 @@ namespace ControlLib.Components.Window {
             obj.SetValue(AcrylicElement.TintOpacityProperty, value);
         }
 
-        public static System.Windows.Media.Color GetTintColor(DependencyObject obj) {
-            return (System.Windows.Media.Color) obj.GetValue(AcrylicElement.TintColorProperty);
+        public static Color GetTintColor(DependencyObject obj) {
+            return (Color) obj.GetValue(AcrylicElement.TintColorProperty);
         }
 
-        public static void SetTintColor(DependencyObject obj, System.Windows.Media.Color value) {
+        public static void SetTintColor(DependencyObject obj, Color value) {
             obj.SetValue(AcrylicElement.TintColorProperty, value);
         }
 
-        public static System.Windows.Media.Color GetFallbackColor(DependencyObject obj) {
-            return (System.Windows.Media.Color) obj.GetValue(AcrylicElement.FallbackColorProperty);
+        public static Color GetFallbackColor(DependencyObject obj) {
+            return (Color) obj.GetValue(AcrylicElement.FallbackColorProperty);
         }
 
-        public static void SetFallbackColor(DependencyObject obj, System.Windows.Media.Color value) {
+        public static void SetFallbackColor(DependencyObject obj, Color value) {
             obj.SetValue(AcrylicElement.FallbackColorProperty, value);
         }
 

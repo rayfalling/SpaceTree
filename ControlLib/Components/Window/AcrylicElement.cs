@@ -5,19 +5,36 @@ using WindowStyle = ControlLib.Components.Window.Data.WindowStyle;
 
 namespace ControlLib.Components.Window {
     internal class AcrylicElement {
+        #region AccentColor
+
+        public static readonly DependencyProperty AccentColorProperty = DependencyProperty.RegisterAttached(
+            "AccentColor",
+            typeof(Color),
+            typeof(AcrylicElement),
+            new FrameworkPropertyMetadata(Color.FromArgb(0,255,255,255), FrameworkPropertyMetadataOptions.Inherits)
+        );
+
+        public static Color GetAccentColor(DependencyObject obj) =>
+            (Color) obj.GetValue(AccentColorProperty);
+
+        public static void SetAccentColor(DependencyObject obj, Color value) =>
+            obj.SetValue(AccentColorProperty, value);
+
+        #endregion
+
         #region TintColor
 
         public static readonly DependencyProperty TintColorProperty = DependencyProperty.RegisterAttached(
             "TintColor",
-            typeof(System.Windows.Media.Color),
+            typeof(Color),
             typeof(AcrylicElement),
             new FrameworkPropertyMetadata(Colors.White, FrameworkPropertyMetadataOptions.Inherits)
         );
 
-        public static System.Windows.Media.Color GetTintColor(DependencyObject obj) =>
-            (System.Windows.Media.Color) obj.GetValue(TintColorProperty);
+        public static Color GetTintColor(DependencyObject obj) =>
+            (Color) obj.GetValue(TintColorProperty);
 
-        public static void SetTintColor(DependencyObject obj, System.Windows.Media.Color value) =>
+        public static void SetTintColor(DependencyObject obj, Color value) =>
             obj.SetValue(TintColorProperty, value);
 
         #endregion
@@ -60,15 +77,15 @@ namespace ControlLib.Components.Window {
 
         public static readonly DependencyProperty FallbackColorProperty = DependencyProperty.RegisterAttached(
             "FallbackColor",
-            typeof(System.Windows.Media.Color),
+            typeof(Color),
             typeof(AcrylicElement),
             new FrameworkPropertyMetadata(Colors.LightGray, FrameworkPropertyMetadataOptions.Inherits)
         );
 
-        public static System.Windows.Media.Color GetFallbackColor(DependencyObject obj) =>
-            (System.Windows.Media.Color) obj.GetValue(FallbackColorProperty);
+        public static Color GetFallbackColor(DependencyObject obj) =>
+            (Color) obj.GetValue(FallbackColorProperty);
 
-        public static void SetFallbackColor(DependencyObject obj, System.Windows.Media.Color value) =>
+        public static void SetFallbackColor(DependencyObject obj, Color value) =>
             obj.SetValue(FallbackColorProperty, value);
 
         #endregion

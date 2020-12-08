@@ -18,6 +18,12 @@ namespace ControlLib.Libs.Acrylic {
 
         #endregion
 
+        #region Tint Color
+
+        private const uint AccentColor = 0x00FFFFFF;
+
+        #endregion
+
         #region Static Methods
 
         /// <summary>
@@ -26,14 +32,15 @@ namespace ControlLib.Libs.Acrylic {
         /// <param name="hwnd"></param>
         /// <param name="style"></param>
         /// <param name="state"></param>
-        internal static void EnableBlur(IntPtr hwnd, AccentFlagsType style = AccentFlagsType.Window,
-            AccentState state = AccentState.ACCENT_DISABLED) {
+        /// <param name="accentColor"></param>
+        internal static void EnableBlur(IntPtr hwnd, uint accentColor = AccentColor,
+            AccentFlagsType style = AccentFlagsType.Window, AccentState state = AccentState.ACCENT_DISABLED) {
             var accent = new AccentPolicy();
             var accentStructSize = Marshal.SizeOf(accent);
 
             accent.AccentState = state == AccentState.ACCENT_DISABLED ? CheckPlatformSupport(state) : state;
             accent.AccentFlags = style == AccentFlagsType.Window ? 2 : 0x20 | 0x40 | 0x80 | 0x100;
-            accent.GradientColor = 0x80FFFFFF;
+            accent.GradientColor = accentColor;
 
             var accentPtr = Marshal.AllocHGlobal(accentStructSize);
             Marshal.StructureToPtr(accent, accentPtr, false);

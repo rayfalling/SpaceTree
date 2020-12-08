@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Windows;
-using System.Windows.Media;
+﻿using System.Collections.ObjectModel;
 using SpaceTree.Libs.Cache;
 using SpaceTree.Libs.Helper.Disk;
 
@@ -14,7 +9,7 @@ namespace SpaceTree.Pages {
     public partial class MainWindow {
         public MainWindow() {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
+            DataContext = new MainWindowViewModel();
         }
     }
     

@@ -28,7 +28,7 @@ namespace SpaceTree.Libs.FileSize {
                 rate--;
             }
 
-            return $"{tempSize:##.##} {PrettySizeLevel(sizeLevel)}";
+            return $"{tempSize:0.##} {PrettySizeLevel(sizeLevel)}";
         }
 
         /// <summary>
