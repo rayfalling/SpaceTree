@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -11,11 +12,17 @@ namespace SpaceTree.Pages {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow {
-        private List<DiskInfoCache> _driveInfos;
-
         public MainWindow() {
             InitializeComponent();
-            _driveInfos = DiskInfo.GetSystemDriveInfos();
+            this.DataContext = new MainWindowViewModel();
+        }
+    }
+    
+    internal class MainWindowViewModel {
+        public ObservableCollection<DiskInfoCache> DiskInfoCaches { get; set; }
+
+        public MainWindowViewModel() {
+            DiskInfoCaches = new ObservableCollection<DiskInfoCache>(DiskInfo.GetSystemDriveInfos());
         }
     }
 }

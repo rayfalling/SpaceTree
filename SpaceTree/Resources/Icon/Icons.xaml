@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Image x:Key="Disk" Source="/SpaceTree;component/Resources/Icon/Disk.ico" />
+    <Image x:Key="CdRom" Source="/SpaceTree;component/Resources/Icon/CDRom.ico" />
+    <Image x:Key="Network" Source="/SpaceTree;component/Resources/Icon/Network.ico" />
+    <Image x:Key="Removable" Source="/SpaceTree;component/Resources/Icon/Removable.ico" />
+    <Image x:Key="SystemDisk" Source="/SpaceTree;component/Resources/Icon/SystemDisk.ico" />
+</ResourceDictionary>

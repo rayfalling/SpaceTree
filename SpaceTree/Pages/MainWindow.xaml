@@ -3,8 +3,23 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:window="clr-namespace:ControlLib.Components.Window;assembly=ControlLib"
                       xmlns:reveal="clr-namespace:ControlLib.Libs.Reveal;assembly=ControlLib"
+                      xmlns:controls="clr-namespace:SpaceTree.Libs.Controls"
                       Title="MainWindow" Height="300" Width="300">
     <Grid reveal:PointerTracker.Enabled="True" Background="#01FFFFFF">
+        <WrapPanel>
+            <ItemsControl ItemsSource="{Binding DiskInfoCaches}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <controls:DiskCard DataContext="{Binding}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </WrapPanel>
         <Grid Height="70" VerticalAlignment="Bottom" HorizontalAlignment="Center">
             <Grid.Resources>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonRoundRevealStyle}">

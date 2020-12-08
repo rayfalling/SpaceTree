@@ -1,4 +1,6 @@
-﻿namespace SpaceTree.Libs.Cache {
+﻿using SpaceTree.Libs.FileSize;
+
+namespace SpaceTree.Libs.Cache {
     internal class DiskInfoCache {
         /// <summary>
         /// Disk name
@@ -24,15 +26,19 @@
         /// Construct
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="length"></param>
         /// <param name="diskType"></param>
         /// <param name="diskFreeSize"></param>
-        /// <param name="diskUsedSize"></param>
+        /// <param name="diskTotalSize"></param>
         public DiskInfoCache(string name, string diskType, ulong diskFreeSize, ulong diskTotalSize) {
             Name = name;
-            DiskType = diskType;
+            DiskType = name == "C:\\" ? "SystemDisk" : diskType;
             DiskFreeSize = diskFreeSize;
             DiskTotalSize = diskTotalSize;
+        }
+
+        public string GetFormattedUsage() {
+            return $"Used: {SizeUtils.GetPrettySize(DiskTotalSize - DiskFreeSize)}, " +
+                   $"Total: {SizeUtils.GetPrettySize(DiskTotalSize)}";
         }
     }
 }
