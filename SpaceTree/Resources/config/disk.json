@@ -1,0 +1,13 @@
+{
+  "DiskTypeInclude": [
+    "Fixed",
+    "Removable",
+    "NoRootDirectory"
+  ],
+  "DiskTypeExclude": [
+    "CDRom",
+    "Network",
+    "Ram",
+    "Unknown"
+  ]
+}

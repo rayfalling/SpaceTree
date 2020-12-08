@@ -3,20 +3,30 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using SpaceTree.Libs.Helper.File;
 
-namespace SpaceTree.Libs.Config.Exclude {
-    internal class ExcludeMatch : Config<ExcludeMatch> {
-        protected ExcludeConfig ExcludeConfig { get; private set; } = null!;
+namespace SpaceTree.Libs.Config.File {
+    internal class FileExcludeConfig : Config<FileExcludeConfig> {
+        #region Protected Property
 
-        /// <summary>
-        /// Do not modified config file path
-        /// </summary>
-        protected override string ConfigPath => "Resources/exclude.json";
+        protected FileExcludeConfigModel FileExcludeConfigModel { get; private set; } = null!;
+
+        #endregion
+
+        #region Construct
 
         /// <summary>
         /// default construct
         /// </summary>
-        public ExcludeMatch() {
+        public FileExcludeConfig() {
         }
+
+        #endregion
+
+        #region Override
+
+        /// <summary>
+        /// Do not modified config file path
+        /// </summary>
+        protected override string ConfigPath => "Resources/config/exclude.json";
 
         /// <summary>
         /// load config file
@@ -28,7 +38,8 @@ namespace SpaceTree.Libs.Config.Exclude {
                 ReadCommentHandling = JsonCommentHandling.Skip,
                 AllowTrailingCommas = true
             };
-            ExcludeConfig = JsonSerializer.Deserialize<ExcludeConfig>(json, options) ?? new ExcludeConfig();
+            FileExcludeConfigModel = JsonSerializer.Deserialize<FileExcludeConfigModel>(json, options) ??
+                                     new FileExcludeConfigModel();
         }
 
         /// <summary>
@@ -38,15 +49,19 @@ namespace SpaceTree.Libs.Config.Exclude {
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
         /// test if file path contains in exclude list
         /// </summary>
         /// <param name="path"></param>
         /// <returns>false to not include</returns>
         public bool TestFileMatch(string path) {
-            if (ExcludeConfig.FileExcludeList.Count == 0) return false;
+            if (FileExcludeConfigModel.FileExcludeList.Count == 0) return false;
             var flag = false;
-            Parallel.ForEach(ExcludeConfig.FileExcludeList, file => { flag |= path.Contains(file); });
+            Parallel.ForEach(FileExcludeConfigModel.FileExcludeList, file => { flag |= path.Contains(file); });
             return flag;
         }
 
@@ -56,12 +71,12 @@ namespace SpaceTree.Libs.Config.Exclude {
         /// <param name="path"></param>
         /// <returns>false to not include</returns>
         public bool TestDirectionMatch(string path) {
-            if (ExcludeConfig.DirectoryExcludeList.Count == 0) return false;
+            if (FileExcludeConfigModel.DirectoryExcludeList.Count == 0) return false;
             var flag = false;
-            Parallel.ForEach(ExcludeConfig.DirectoryExcludeList, file => {
-                flag |= path.Contains(file);
-            });
+            Parallel.ForEach(FileExcludeConfigModel.DirectoryExcludeList, file => { flag |= path.Contains(file); });
             return flag;
         }
+
+        #endregion
     }
 }

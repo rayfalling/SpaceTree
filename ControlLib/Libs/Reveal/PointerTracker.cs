@@ -2,120 +2,144 @@
 
 namespace ControlLib.Libs.Reveal {
     public static class PointerTracker {
-        public static double GetX(DependencyObject obj) {
-            return (double) obj.GetValue(XProperty);
-        }
+        #region Property
 
-        private static void SetX(DependencyObject obj, double value) {
-            obj.SetValue(XProperty, value);
-        }
+        #region Mouse X
 
-        // Using a DependencyProperty as the backing store for X.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty XProperty =
-            DependencyProperty.RegisterAttached("X", typeof(double), typeof(PointerTracker),
-                new FrameworkPropertyMetadata(double.NaN, FrameworkPropertyMetadataOptions.Inherits));
+        public static double GetX(DependencyObject obj) => (double) obj.GetValue(XProperty);
 
+        private static void SetX(DependencyObject obj, double value) => obj.SetValue(XProperty, value);
 
-        public static double GetY(DependencyObject obj) {
-            return (double) obj.GetValue(YProperty);
-        }
+        public static readonly DependencyProperty XProperty = DependencyProperty.RegisterAttached(
+            "X",
+            typeof(double),
+            typeof(PointerTracker),
+            new FrameworkPropertyMetadata(double.NaN, FrameworkPropertyMetadataOptions.Inherits)
+        );
 
-        private static void SetY(DependencyObject obj, double value) {
-            obj.SetValue(YProperty, value);
-        }
+        #endregion
 
-        // Using a DependencyProperty as the backing store for Y.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty YProperty =
-            DependencyProperty.RegisterAttached("Y", typeof(double), typeof(PointerTracker),
-                new FrameworkPropertyMetadata(double.NaN, FrameworkPropertyMetadataOptions.Inherits));
+        #region Mouse Y
 
+        public static double GetY(DependencyObject obj) => (double) obj.GetValue(YProperty);
 
-        public static Point GetPosition(DependencyObject obj) {
-            return (Point) obj.GetValue(PositionProperty);
-        }
+        private static void SetY(DependencyObject obj, double value) => obj.SetValue(YProperty, value);
 
-        private static void SetPosition(DependencyObject obj, Point value) {
+        public static readonly DependencyProperty YProperty = DependencyProperty.RegisterAttached(
+            "Y",
+            typeof(double),
+            typeof(PointerTracker),
+            new FrameworkPropertyMetadata(double.NaN, FrameworkPropertyMetadataOptions.Inherits)
+        );
+
+        #endregion
+
+        #region Position
+
+        public static Point GetPosition(DependencyObject obj) =>
+            (Point) obj.GetValue(PositionProperty);
+
+        private static void SetPosition(DependencyObject obj, Point value) =>
             obj.SetValue(PositionProperty, value);
-        }
 
         // Using a DependencyProperty as the backing store for Position.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PositionProperty =
-            DependencyProperty.RegisterAttached("Position", typeof(Point), typeof(PointerTracker),
-                new FrameworkPropertyMetadata(new Point(0, 0), FrameworkPropertyMetadataOptions.Inherits));
+        public static readonly DependencyProperty PositionProperty = DependencyProperty.RegisterAttached(
+            "Position",
+            typeof(Point),
+            typeof(PointerTracker),
+            new FrameworkPropertyMetadata(new Point(0, 0), FrameworkPropertyMetadataOptions.Inherits)
+        );
 
+        #endregion
 
-        public static bool GetIsEnter(DependencyObject obj) {
-            return (bool) obj.GetValue(IsEnterProperty);
-        }
+        #region Mouse Enter
 
-        private static void SetIsEnter(DependencyObject obj, bool value) {
-            obj.SetValue(IsEnterProperty, value);
-        }
+        public static bool GetIsEnter(DependencyObject obj) => (bool) obj.GetValue(IsEnterProperty);
+
+        private static void SetIsEnter(DependencyObject obj, bool value) => obj.SetValue(IsEnterProperty, value);
 
         // Using a DependencyProperty as the backing store for IsEnter.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsEnterProperty =
-            DependencyProperty.RegisterAttached("IsEnter", typeof(bool), typeof(PointerTracker),
-                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits));
+        public static readonly DependencyProperty IsEnterProperty = DependencyProperty.RegisterAttached(
+            "IsEnter",
+            typeof(bool),
+            typeof(PointerTracker),
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits)
+        );
 
+        #endregion
 
-        public static UIElement GetRootObject(DependencyObject obj) {
-            return (UIElement) obj.GetValue(RootObjectProperty);
-        }
+        #region Root
 
-        private static void SetRootObject(DependencyObject obj, UIElement value) {
+        public static UIElement GetRootObject(DependencyObject obj) =>
+            (UIElement) obj.GetValue(RootObjectProperty);
+
+        private static void SetRootObject(DependencyObject obj, UIElement value) =>
             obj.SetValue(RootObjectProperty, value);
-        }
 
         // Using a DependencyProperty as the backing store for RootObject.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty RootObjectProperty =
-            DependencyProperty.RegisterAttached("RootObject", typeof(UIElement), typeof(PointerTracker),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits));
+        public static readonly DependencyProperty RootObjectProperty = DependencyProperty.RegisterAttached(
+            "RootObject",
+            typeof(UIElement),
+            typeof(PointerTracker),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits)
+        );
 
+        #endregion
 
-        public static bool GetEnabled(DependencyObject obj) {
-            return (bool) obj.GetValue(EnabledProperty);
-        }
+        #region Enable
 
-        public static void SetEnabled(DependencyObject obj, bool value) {
+        public static bool GetEnabled(DependencyObject obj) =>
+            (bool) obj.GetValue(EnabledProperty);
+
+        public static void SetEnabled(DependencyObject obj, bool value) =>
             obj.SetValue(EnabledProperty, value);
-        }
 
-        // Using a DependencyProperty as the backing store for Enabled.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty EnabledProperty =
-            DependencyProperty.RegisterAttached("Enabled", typeof(bool), typeof(PointerTracker),
-                new PropertyMetadata(false, OnEnabledChanged));
+        public static readonly DependencyProperty EnabledProperty = DependencyProperty.RegisterAttached(
+            "Enabled",
+            typeof(bool),
+            typeof(PointerTracker),
+            new PropertyMetadata(false, OnEnabledChanged)
+        );
+
+        #endregion
+
+        #endregion
+
+        #region Event
 
         private static void OnEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            var ctrl = d as UIElement;
             var newValue = (bool) e.NewValue;
             var oldValue = (bool) e.OldValue;
-            if (ctrl == null) return;
+            // ReSharper disable once InvertIf
+            if (d is UIElement ctrl) {
+                if (oldValue && !newValue) {
+                    ctrl.MouseEnter -= MouseEnter;
+                    ctrl.PreviewMouseMove -= PreviewMouseMove;
+                    ctrl.MouseLeave -= MouseLeave;
 
-            if (oldValue && !newValue) {
-                ctrl.MouseEnter -= Ctrl_MouseEnter;
-                ctrl.PreviewMouseMove -= Ctrl_PreviewMouseMove;
-                ctrl.MouseLeave -= Ctrl_MouseLeave;
+                    ctrl.ClearValue(PointerTracker.RootObjectProperty);
+                }
 
-                ctrl.ClearValue(PointerTracker.RootObjectProperty);
-            }
+                // ReSharper disable once InvertIf
+                if (!oldValue && newValue) {
+                    ctrl.MouseEnter += MouseEnter;
+                    ctrl.PreviewMouseMove += PreviewMouseMove;
+                    ctrl.MouseLeave += MouseLeave;
 
-            if (!oldValue && newValue) {
-                ctrl.MouseEnter += Ctrl_MouseEnter;
-                ctrl.PreviewMouseMove += Ctrl_PreviewMouseMove;
-                ctrl.MouseLeave += Ctrl_MouseLeave;
-
-                SetRootObject(ctrl, ctrl);
+                    SetRootObject(ctrl, ctrl);
+                }
             }
         }
 
-        private static void Ctrl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e) {
-            var ctrl = sender as UIElement;
-            if (ctrl != null) {
+        #region Delegate
+
+        private static void MouseEnter(object sender, System.Windows.Input.MouseEventArgs e) {
+            if (sender is UIElement ctrl) {
                 SetIsEnter(ctrl, true);
             }
         }
 
-        private static void Ctrl_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
+        private static void PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e) {
             if (!(sender is UIElement ctrl) || !GetIsEnter(ctrl)) return;
             var pos = e.GetPosition(ctrl);
 
@@ -124,10 +148,14 @@ namespace ControlLib.Libs.Reveal {
             SetPosition(ctrl, pos);
         }
 
-        private static void Ctrl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e) {
+        private static void MouseLeave(object sender, System.Windows.Input.MouseEventArgs e) {
             if (sender is UIElement ctrl) {
                 SetIsEnter(ctrl, false);
             }
         }
+
+        #endregion
+
+        #endregion
     }
 }

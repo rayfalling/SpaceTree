@@ -5,6 +5,8 @@ using ControlLib.Libs.SystemInfo;
 
 namespace ControlLib.Libs.Acrylic {
     internal class AcrylicHelper {
+        #region Win32 API DLL Import
+
         /// <summary>
         /// windows native method
         /// </summary>
@@ -13,6 +15,10 @@ namespace ControlLib.Libs.Acrylic {
         /// <returns></returns>
         [DllImport("user32.dll")]
         internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
+
+        #endregion
+
+        #region Static Methods
 
         /// <summary>
         /// Enable blur effect in windows platform
@@ -38,7 +44,7 @@ namespace ControlLib.Libs.Acrylic {
                 Data = accentPtr
             };
 
-            SetWindowCompositionAttribute(hwnd, ref data);
+            _ = SetWindowCompositionAttribute(hwnd, ref data);
             Marshal.FreeHGlobal(accentPtr);
         }
 
@@ -87,5 +93,7 @@ namespace ControlLib.Libs.Acrylic {
 
             return state;
         }
+
+        #endregion
     }
 }

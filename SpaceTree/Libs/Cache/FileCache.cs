@@ -3,17 +3,17 @@
 namespace SpaceTree.Libs.Cache {
     internal class FileCache {
         /// <summary>
-        /// 文件路径
+        /// file path
         /// </summary>
         public string Uri { get; set; }
 
         /// <summary>
-        /// 文件大小
+        /// file size
         /// </summary>
         public ulong Length { get; set; }
 
         /// <summary>
-        /// 上次统计日期
+        /// last access date
         /// </summary>
         public DateTime LastSeen { get; set; }
 

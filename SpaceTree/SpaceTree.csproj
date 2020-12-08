@@ -47,6 +47,7 @@
 	</ProjectExtensions>
 
 	<ItemGroup>
+		<None Remove="Resources\config\disk.json" />
 		<None Remove="Resources\du\du.exe" />
 		<None Remove="Resources\du\du64.exe" />
 		<None Remove="Resources\du\du64a.exe" />
@@ -59,6 +60,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Content Include="Resources\config\disk.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Content Include="Resources\du\du.exe">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
@@ -71,7 +75,7 @@
 		<Content Include="Resources\du\Eula.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Resources\exclude.json">
+		<Content Include="Resources\config\exclude.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

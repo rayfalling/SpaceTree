@@ -1,5 +1,4 @@
 ﻿using System;
-using SpaceTree.Libs.Config.Exclude;
 using SpaceTree.Libs.Logger;
 
 namespace SpaceTree.Libs.FileSize {

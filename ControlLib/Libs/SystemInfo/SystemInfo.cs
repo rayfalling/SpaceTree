@@ -1,8 +1,10 @@
-﻿using System;
+using System;
 
 namespace ControlLib.Libs.SystemInfo {
     internal class SystemInfo {
         public static Lazy<VersionInfo> Version { get; } = new Lazy<VersionInfo>(GetVersionInfo);
+
+        #region Static
 
         internal static VersionInfo GetVersionInfo() {
             var registryKey =
@@ -21,15 +23,14 @@ namespace ControlLib.Libs.SystemInfo {
 
             if (majorValue is int major && minorValue is int minor && canReadBuild) {
                 return new VersionInfo(major, minor, build);
-            } else {
-                return new VersionInfo(defaultVersion.Major, defaultVersion.Minor, defaultVersion.Revision);
             }
+
+            return new VersionInfo(defaultVersion.Major, defaultVersion.Minor, defaultVersion.Revision);
         }
 
         internal static bool IsWin10() {
             return Version.Value.Major == 10;
         }
-
 
         internal static bool IsWin7() {
             return Version.Value.Major == 6 && Version.Value.Minor == 1;
@@ -38,5 +39,7 @@ namespace ControlLib.Libs.SystemInfo {
         internal static bool IsWin8() {
             return Version.Value.Major == 6 && (Version.Value.Minor == 2 || Version.Value.Minor == 3);
         }
+
+        #endregion
     }
 }

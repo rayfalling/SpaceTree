@@ -8,7 +8,7 @@ using SpaceTree.Libs.FileSize;
 
 namespace SpaceTree.Libs.Cache {
     /// <summary>
-    /// 目录信息缓存
+    /// directory info cache
     /// </summary>
     internal class DirectoryCache {
         /// <summary>

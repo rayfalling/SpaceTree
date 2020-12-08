@@ -1,7 +1,6 @@
 ﻿using System.Windows;
-using SpaceTree.Libs.Cache;
-using SpaceTree.Libs.Config.Exclude;
-using SpaceTree.Libs.Helper.File;
+using SpaceTree.Libs.Config.Disk;
+using SpaceTree.Libs.Config.File;
 using SpaceTree.Libs.Logger;
 using SpaceTree.Pages;
 
@@ -10,7 +9,8 @@ namespace SpaceTree {
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App {
-        internal static ExcludeMatch ExcludeMatch = ExcludeMatch.GetInstance();
+        internal static FileExcludeConfig FileExcludeConfig = FileExcludeConfig.GetInstance();
+        internal static DiskConfig DiskConfig = DiskConfig.GetInstance();
         internal static Logger Logger = Logger.GetInstance();
 
         static App() {
@@ -21,7 +21,12 @@ namespace SpaceTree {
             Logger.Log(LogLevel.Info, "SpaceTree start.");
 
             // Load exclude config
-            ExcludeMatch.LoadConfig();
+            FileExcludeConfig.LoadConfig();
+            Logger.Log(LogLevel.Info, "Loading file exclude config......");
+
+            // Load disk info config
+            DiskConfig.LoadConfig();
+            Logger.Log(LogLevel.Info, "Loading disk info config......");
 
             //TODO Load config & cache here
             //TODO judge junction in directories

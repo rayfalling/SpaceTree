@@ -5,7 +5,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ControlLib.Libs.Icon {
-    class IconHelper {
+    internal class IconHelper {
         #region Icon Property
 
         private static ImageSource? _appIcon;

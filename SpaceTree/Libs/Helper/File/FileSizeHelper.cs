@@ -5,7 +5,7 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using SpaceTree.Libs.Cache;
-using SpaceTree.Libs.Config.Exclude;
+using SpaceTree.Libs.Config.File;
 using SpaceTree.Libs.Helper.Cmd;
 using SpaceTree.Libs.Logger;
 
@@ -56,12 +56,12 @@ namespace SpaceTree.Libs.Helper.File {
 
             var fileList = directory.GetFiles()
                                     .Where(item =>
-                                        !ExcludeMatch.GetInstance().TestFileMatch(item.FullName))
+                                        !FileExcludeConfig.GetInstance().TestFileMatch(item.FullName))
                                     .ToList();
 
             var directoryList = directory.GetDirectories()
                                          .Where(item =>
-                                             !ExcludeMatch.GetInstance().TestDirectionMatch(item.FullName))
+                                             !FileExcludeConfig.GetInstance().TestDirectionMatch(item.FullName))
                                          .ToList();
 
             Parallel.ForEach(fileList,
