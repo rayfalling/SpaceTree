@@ -4,7 +4,6 @@ using System.Windows.Data;
 using System.Windows.Markup;
 using System.Windows.Media;
 using ControlLib.Libs.Converter;
-using ControlLib.Libs.MouseTracker;
 
 namespace ControlLib.Libs.Reveal {
     public class RevealBrushExtension : MarkupExtension {

@@ -133,7 +133,6 @@ namespace ControlLib.Components.Layout {
 
         #endregion
 
-
         #region Override
 
         public override void OnApplyTemplate() {

@@ -33,8 +33,7 @@ namespace ControlLib.Libs.Acrylic {
         /// <param name="style"></param>
         /// <param name="state"></param>
         /// <param name="accentColor"></param>
-        internal static void EnableBlur(IntPtr hwnd, uint accentColor = AccentColor,
-            AccentFlagsType style = AccentFlagsType.Window, AccentState state = AccentState.ACCENT_DISABLED) {
+        internal static void EnableBlur(IntPtr hwnd, uint accentColor = AccentColor, AccentFlagsType style = AccentFlagsType.Window, AccentState state = AccentState.ACCENT_DISABLED) {
             var accent = new AccentPolicy();
             var accentStructSize = Marshal.SizeOf(accent);
 

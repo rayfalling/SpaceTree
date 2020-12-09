@@ -6,6 +6,7 @@
         Gigabyte = 3,
         Terabyte = 4,
         Petabyte = 5,
-        Exabyte = 6
+        Exabyte = 6,
+        None = -1
     }
 }

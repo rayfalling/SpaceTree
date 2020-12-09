@@ -22,6 +22,8 @@ namespace SpaceTree.Libs.Cache {
         /// </summary>
         public ulong DiskTotalSize { get; set; }
 
+        private SizeLevel _sizeLevel = SizeLevel.None;
+
         /// <summary>
         /// Construct
         /// </summary>
@@ -36,8 +38,16 @@ namespace SpaceTree.Libs.Cache {
             DiskTotalSize = diskTotalSize;
         }
 
-        public string GetFormattedUsage() { return $"Used: {SizeUtils.GetPrettySize(DiskTotalSize - DiskFreeSize)}"; }
+        public string GetFormattedUsage() {
+            if (_sizeLevel != SizeLevel.None)
+                _sizeLevel = SizeUtils.GetProperSizeLevel(DiskTotalSize - DiskFreeSize);
+            return $"Used: {SizeUtils.GetPrettySize(DiskTotalSize - DiskFreeSize, _sizeLevel)}";
+        }
 
-        public string GetFormattedTotal() { return $"Total: {SizeUtils.GetPrettySize(DiskTotalSize)}"; }
+        public string GetFormattedTotal() {
+            if (_sizeLevel != SizeLevel.None)
+                _sizeLevel = SizeUtils.GetProperSizeLevel(DiskTotalSize - DiskFreeSize);
+            return $"Total: {SizeUtils.GetPrettySize(DiskTotalSize, _sizeLevel)}";
+        }
     }
 }

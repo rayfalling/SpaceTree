@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
 namespace ControlLib.Libs.Converter {
-    public class OpacityConverter : IValueConverter {
+    internal class NegativeMarginConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            var isEnter = (bool) value;
-            var opacity = (double) parameter;
-            return isEnter ? opacity : 0;
+            var margin = (double) value;
+            return new Thickness(-margin);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

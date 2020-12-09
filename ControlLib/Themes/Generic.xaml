@@ -3,10 +3,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:window="clr-namespace:ControlLib.Components.Window"
     xmlns:local="clr-namespace:ControlLib.Components.Layout"
-    xmlns:acrylic="clr-namespace:ControlLib.Libs.Acrylic">
+    xmlns:converter="clr-namespace:ControlLib.Libs.Converter"
+    xmlns:contextMenu="clr-namespace:ControlLib.Components.ContextMenu"
+    xmlns:shadow="clr-namespace:ControlLib.Components.Shadow">
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/ControlLib;component/Styles/Menu/Menu.xaml" />
         <ResourceDictionary Source="/ControlLib;component/Styles/Window/Window.xaml" />
     </ResourceDictionary.MergedDictionaries>
+
+    <converter:BrushTranslationConverter x:Key="BrushTranslationConverter" />
 
     <Style TargetType="{x:Type window:AcrylicWindow}" BasedOn="{StaticResource AcrylicWindowStyle}">
         <Setter Property="Template">
@@ -22,7 +27,8 @@
                         <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Self}}" Value="False">
                             <Setter TargetName="windowBorder" Property="Border.BorderBrush" Value="Gray" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource Self}}" Value="Maximized" />
+                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource Self}}"
+                                     Value="Maximized" />
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -74,8 +80,10 @@
                         <Rectangle>
                             <Rectangle.Fill>
                                 <PriorityBinding>
-                                    <Binding Path="Target.Background" RelativeSource="{RelativeSource AncestorType={x:Type local:AcrylicPanel}}" />
-                                    <Binding Path="Target.Fill" RelativeSource="{RelativeSource AncestorType={x:Type local:AcrylicPanel}}" />
+                                    <Binding Path="Target.(Panel.Background)"
+                                             RelativeSource="{RelativeSource AncestorType={x:Type local:AcrylicPanel}}" />
+                                    <Binding Path="Target.(Shape.Fill)"
+                                             RelativeSource="{RelativeSource AncestorType={x:Type local:AcrylicPanel}}" />
                                 </PriorityBinding>
                             </Rectangle.Fill>
                         </Rectangle>
@@ -83,7 +91,7 @@
                         <Canvas>
                             <ContentControl>
                                 <ContentControl.CacheMode>
-                                    <BitmapCache RenderAtScale="0.2"/>
+                                    <BitmapCache RenderAtScale="0.2" />
                                 </ContentControl.CacheMode>
                                 <Rectangle x:Name="rect"
                                            IsHitTestVisible="False"
@@ -93,54 +101,117 @@
                                     <Rectangle.Fill>
                                         <VisualBrush Stretch="None" AlignmentX="Left" AlignmentY="Top"
                                                      ViewboxUnits="Absolute"
-                                                     Visual="{Binding Target, RelativeSource={RelativeSource AncestorType={x:Type local:AcrylicPanel}}}">
-                                        </VisualBrush>
+                                                     Visual="{Binding Target, RelativeSource={RelativeSource AncestorType={x:Type local:AcrylicPanel}}}" />
                                     </Rectangle.Fill>
                                     <Rectangle.RenderTransform>
-                                        <MultiBinding Converter="{StaticResource brushTranslationConverter}">
-                                            <Binding Path="Target" RelativeSource="{RelativeSource AncestorType={x:Type local:AcrylicPanel}}"/>
-                                            <Binding Path="Source" RelativeSource="{RelativeSource AncestorType={x:Type local:AcrylicPanel}}"/>
+                                        <MultiBinding Converter="{StaticResource BrushTranslationConverter}">
+                                            <Binding Path="Target"
+                                                     RelativeSource="{RelativeSource AncestorType={x:Type local:AcrylicPanel}}" />
+                                            <Binding Path="Source"
+                                                     RelativeSource="{RelativeSource AncestorType={x:Type local:AcrylicPanel}}" />
                                         </MultiBinding>
                                     </Rectangle.RenderTransform>
                                     <Rectangle.Effect>
-                                        <BlurEffect Radius="100"/>
+                                        <BlurEffect Radius="100" />
                                     </Rectangle.Effect>
                                 </Rectangle>
                             </ContentControl>
                         </Canvas>
                         <!-- tint layer -->
-                        <Rectangle Opacity="{Binding TintOpacity, RelativeSource={RelativeSource AncestorType={x:Type local:AcrylicPanel}}}">
+                        <Rectangle
+                            Opacity="{Binding TintOpacity, RelativeSource={RelativeSource AncestorType={x:Type local:AcrylicPanel}}}">
                             <Rectangle.Fill>
-                                <SolidColorBrush Color="{Binding TintColor, RelativeSource={RelativeSource AncestorType={x:Type local:AcrylicPanel}}}" />
+                                <SolidColorBrush
+                                    Color="{Binding TintColor, RelativeSource={RelativeSource AncestorType={x:Type local:AcrylicPanel}}}" />
                             </Rectangle.Fill>
                         </Rectangle>
 
                         <!-- noise layer -->
-                        <Rectangle Opacity="{Binding NoiseOpacity, RelativeSource={RelativeSource AncestorType={x:Type local:AcrylicPanel}}}">
+                        <Rectangle
+                            Opacity="{Binding NoiseOpacity, RelativeSource={RelativeSource AncestorType={x:Type local:AcrylicPanel}}}">
                             <Rectangle.Fill>
                                 <ImageBrush ImageSource="/FluentWPF;component/Assets/Images/noise.png"
-                                                TileMode="Tile" Stretch="None"
-                                                ViewportUnits="Absolute" Viewport="0,0,128,128"/>
+                                            TileMode="Tile" Stretch="None"
+                                            ViewportUnits="Absolute" Viewport="0,0,128,128" />
                             </Rectangle.Fill>
                         </Rectangle>
 
 
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
+    <Style TargetType="{x:Type contextMenu:AcrylicContextMenu}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Grid.IsSharedSizeScope" Value="True" />
+        <Setter Property="HasDropShadow" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <ControlTemplate.Resources>
+                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource AcrylicMenuItemStyle}" />
+                    </ControlTemplate.Resources>
+                    <Border x:Name="ContextMenuBorder"
+                            BorderBrush="{DynamicResource SystemAltMediumColorBrush}"
+                            Background="Transparent">
+                        <Grid>
+                            <!-- Color tint overlay -->
+                            <Rectangle x:Name="tintColorLayer"
+                                       Opacity="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=(window:AcrylicWindow.TintOpacity)}">
+                                <Rectangle.Fill>
+                                    <SolidColorBrush
+                                        Color="{Binding RelativeSource={RelativeSource AncestorType=Rectangle}, Path=(window:AcrylicWindow.TintColor)}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <!-- Tiled noise texture -->
+                            <Rectangle x:Name="noiseLayer"
+                                       Opacity="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=(window:AcrylicWindow.NoiseOpacity)}">
+                                <Rectangle.Fill>
+                                    <ImageBrush ImageSource="/FluentWPF;component/Assets/Images/noise.png"
+                                                TileMode="Tile" Stretch="None"
+                                                ViewportUnits="Absolute" Viewport="0,0,128,128" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+
+                            <shadow:DropShadowPanel Margin="29,0,0,0" ShadowMode="Outer" ShadowOpacity="0.3"
+                                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                                    BlurRadius="7">
+                                <Rectangle Fill="{DynamicResource SystemAltLowColorBrush}" />
+                            </shadow:DropShadowPanel>
+                            <ScrollViewer x:Name="SubMenuScrollViewer"
+                                          Margin="2"
+                                          Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                <ItemsPresenter x:Name="ItemsPresenter"
+                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                Grid.IsSharedSizeScope="True"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                KeyboardNavigation.TabNavigation="Cycle" />
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type window:AcrylicPopup}">
+        <Setter Property="AllowsTransparency" Value="True" />
+    </Style>
+
     <Style TargetType="{x:Type local:Container}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Container}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                    </Border>
+                            BorderThickness="{TemplateBinding BorderThickness}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

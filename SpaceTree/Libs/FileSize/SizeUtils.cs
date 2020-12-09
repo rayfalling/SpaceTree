@@ -64,6 +64,7 @@ namespace SpaceTree.Libs.FileSize {
                 SizeLevel.Terabyte => "TB",
                 SizeLevel.Petabyte => "PB",
                 SizeLevel.Exabyte => "EB",
+                SizeLevel.None => "",
                 _ => throw new ArgumentOutOfRangeException(nameof(sizeLevel), sizeLevel, null)
             };
         }
