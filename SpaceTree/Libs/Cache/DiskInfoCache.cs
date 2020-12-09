@@ -1,7 +1,7 @@
 ﻿using SpaceTree.Libs.FileSize;
 
 namespace SpaceTree.Libs.Cache {
-    internal class DiskInfoCache {
+    public class DiskInfoCache {
         /// <summary>
         /// Disk name
         /// </summary>
@@ -39,13 +39,13 @@ namespace SpaceTree.Libs.Cache {
         }
 
         public string GetFormattedUsage() {
-            if (_sizeLevel != SizeLevel.None)
+            if (_sizeLevel == SizeLevel.None)
                 _sizeLevel = SizeUtils.GetProperSizeLevel(DiskTotalSize - DiskFreeSize);
             return $"Used: {SizeUtils.GetPrettySize(DiskTotalSize - DiskFreeSize, _sizeLevel)}";
         }
 
         public string GetFormattedTotal() {
-            if (_sizeLevel != SizeLevel.None)
+            if (_sizeLevel == SizeLevel.None)
                 _sizeLevel = SizeUtils.GetProperSizeLevel(DiskTotalSize - DiskFreeSize);
             return $"Total: {SizeUtils.GetPrettySize(DiskTotalSize, _sizeLevel)}";
         }

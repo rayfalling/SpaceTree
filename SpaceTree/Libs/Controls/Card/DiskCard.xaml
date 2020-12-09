@@ -23,11 +23,11 @@
     </UserControl.Resources>
     <Button Style="{StaticResource ButtonStyle}" Background="Transparent" Width="156" Height="156"
             Margin="2,2,2,2">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Image x:Name="DiskIcon" Width="64" Height="64" Margin="0,0,0,0" />
-            <TextBlock x:Name="DiskName" Style="{StaticResource DiskCardText}" />
-            <TextBlock x:Name="DiskUsage" Style="{StaticResource DiskCardText}" />
-            <TextBlock x:Name="DiskTotal" Style="{StaticResource DiskCardText}" />
-        </StackPanel>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image x:Name="DiskIcon" Width="64" Height="64" Margin="0,0,0,0" />
+                <TextBlock x:Name="DiskName" Style="{StaticResource DiskCardText}" />
+                <TextBlock x:Name="DiskUsage" Style="{StaticResource DiskCardText}" />
+                <TextBlock x:Name="DiskTotal" Style="{StaticResource DiskCardText}" />
+            </StackPanel>
     </Button>
 </UserControl>

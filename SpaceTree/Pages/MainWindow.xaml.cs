@@ -12,7 +12,7 @@ namespace SpaceTree.Pages {
             DataContext = new MainWindowViewModel();
         }
     }
-    
+
     internal class MainWindowViewModel {
         public ObservableCollection<DiskInfoCache> DiskInfoCaches { get; set; }
 

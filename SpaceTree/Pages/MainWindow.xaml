@@ -4,19 +4,23 @@
                       xmlns:window="clr-namespace:ControlLib.Components.Window;assembly=ControlLib"
                       xmlns:reveal="clr-namespace:ControlLib.Libs.Reveal;assembly=ControlLib"
                       xmlns:controls="clr-namespace:SpaceTree.Libs.Controls"
+                      xmlns:layout="clr-namespace:ControlLib.Components.Layout;assembly=ControlLib"
                       Title="MainWindow" Height="400" Width="600" TintColor="AliceBlue" AccentColor="#08FFFFFF">
     <Grid reveal:PointerTracker.Enabled="True" Background="#01FFFFFF">
-        <ItemsControl ItemsSource="{Binding DiskInfoCaches}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <controls:DiskCard DataContext="{Binding}" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+        <layout:TileLayout ItemsSource="{Binding DiskInfoCaches}">
+            <controls:DiskCard DataContext="{Binding}" />
+        </layout:TileLayout>
+        <!-- <ItemsControl ItemsSource="{Binding DiskInfoCaches}"> -->
+        <!--     <ItemsControl.ItemTemplate> -->
+        <!--         <DataTemplate> -->
+        <!--             <controls:DiskCard DataContext="{Binding}" /> -->
+        <!--         </DataTemplate> -->
+        <!--     </ItemsControl.ItemTemplate> -->
+        <!--     <ItemsControl.ItemsPanel> -->
+        <!--         <ItemsPanelTemplate> -->
+        <!--             <WrapPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" /> -->
+        <!--         </ItemsPanelTemplate> -->
+        <!--     </ItemsControl.ItemsPanel> -->
+        <!-- </ItemsControl> -->
     </Grid>
 </window:AcrylicWindow>
