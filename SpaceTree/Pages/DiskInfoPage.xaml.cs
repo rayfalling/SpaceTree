@@ -4,19 +4,19 @@ using SpaceTree.Libs.Helper.Disk;
 
 namespace SpaceTree.Pages {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for DiskInfo.xaml
     /// </summary>
-    public partial class MainWindow {
-        public MainWindow() {
+    public partial class DiskInfoPage {
+        public DiskInfoPage() {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
+            TileLayout.ItemSource = new DiskInfoPageViewModel().DiskInfoCaches;
         }
     }
 
-    internal class MainWindowViewModel {
+    internal class DiskInfoPageViewModel {
         public ObservableCollection<DiskInfoCache> DiskInfoCaches { get; set; }
 
-        public MainWindowViewModel() {
+        public DiskInfoPageViewModel() {
             DiskInfoCaches = new ObservableCollection<DiskInfoCache>(DiskInfo.GetSystemDriveInfos());
         }
     }

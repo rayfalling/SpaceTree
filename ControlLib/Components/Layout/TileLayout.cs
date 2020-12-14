@@ -1,9 +1,13 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Markup;
+using System.Windows.Media;
 
 namespace ControlLib.Components.Layout {
+    /// TODO: Finish TileLayout
     /// <summary>
     /// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.
     ///
@@ -11,14 +15,14 @@ namespace ControlLib.Components.Layout {
     /// Add this XmlNamespace attribute to the root element of the markup file where it is 
     /// to be used:
     ///
-    ///     xmlns:ControlLib="clr-namespace:ControlLib.Components.Layout"
+    ///     xmlns:MyNamespace="clr-namespace:ControlLib.Components.Layout"
     ///
     ///
     /// Step 1b) Using this custom control in a XAML file that exists in a different project.
     /// Add this XmlNamespace attribute to the root element of the markup file where it is 
     /// to be used:
     ///
-    ///     xmlns:ControlLib="clr-namespace:ControlLib.Components.Layout;assembly=ControlLib.Components.Layout"
+    ///     xmlns:MyNamespace="clr-namespace:ControlLib.Components.Layout;assembly=ControlLib.Components.Layout"
     ///
     /// You will also need to add a project reference from the project where the XAML file lives
     /// to this project and Rebuild to avoid compilation errors:
@@ -30,181 +34,133 @@ namespace ControlLib.Components.Layout {
     /// Step 2)
     /// Go ahead and use your control in the XAML file.
     ///
-    ///     <ControlLib:Container/>
+    ///     <MyNamespace:TileLayout/>
     ///
     /// </summary>
-    public class TileLayout : Control {
-        #region Construct
+    public class TileLayout : ItemsControl {
+        private Grid TileGrid { get; set; }
 
         static TileLayout() {
             var type = typeof(TileLayout);
             DefaultStyleKeyProperty.OverrideMetadata(type, new FrameworkPropertyMetadata(type));
         }
 
-        #endregion
-
-        #region Property
-
-        #region ItemMinHeight
-
-        public double ItemMinHeight {
-            get => (double) GetValue(ItemMinHeightProperty);
-            set => SetValue(ItemMinHeightProperty, value);
+        public TileLayout() {
+            TileGrid = new Grid();
+            ListData = new List<LayoutItemData>();
+            RowCount = 2;
+            ColumnCount = 2;
         }
-
-        public static readonly DependencyProperty ItemMinHeightProperty = DependencyProperty.Register(
-            "ItemMinHeight",
-            typeof(double),
-            typeof(TileLayout),
-            new PropertyMetadata(40.0)
-        );
-
-        #endregion
-
-        #region ItemMinWidth
-
-        public double ItemMinWidth {
-            get => (double) GetValue(ItemMinWidthProperty);
-            set => SetValue(ItemMinWidthProperty, value);
-        }
-
-        public static readonly DependencyProperty ItemMinWidthProperty = DependencyProperty.Register(
-            "ItemMinWidth",
-            typeof(double),
-            typeof(TileLayout),
-            new PropertyMetadata(40.0)
-        );
-
-        #endregion
-
-        #region ItemMaxHeight
-
-        public double ItemMaxHeight {
-            get => (double) GetValue(ItemMaxHeightProperty);
-            set => SetValue(ItemMaxHeightProperty, value);
-        }
-
-        public static readonly DependencyProperty ItemMaxHeightProperty = DependencyProperty.Register(
-            "ItemMaxHeight",
-            typeof(double),
-            typeof(TileLayout),
-            new PropertyMetadata(80.0)
-        );
-
-        #endregion
-
-        #region ItemMaxWidth
-
-        public double ItemMaxWidth {
-            get => (double) GetValue(ItemMaxWidthProperty);
-            set => SetValue(ItemMaxWidthProperty, value);
-        }
-
-        public static readonly DependencyProperty ItemMaxWidthProperty = DependencyProperty.Register(
-            "ItemMaxWidth",
-            typeof(double),
-            typeof(TileLayout),
-            new PropertyMetadata(80.0)
-        );
-
-        #endregion
-
-        #region ItemsHeight
-
-        public double ItemsHeight {
-            get => (double) GetValue(ItemsHeightProperty);
-            set => SetValue(ItemsHeightProperty, value);
-        }
-
-        public static readonly DependencyProperty ItemsHeightProperty = DependencyProperty.Register(
-            "ItemsHeight",
-            typeof(double),
-            typeof(TileLayout),
-            new PropertyMetadata(0.0)
-        );
-
-        #endregion
-
-        #region ItemsWidth
-
-        public double ItemsWidth {
-            get => (double) GetValue(ItemsWidthProperty);
-            set => SetValue(ItemsWidthProperty, value);
-        }
-
-        public static readonly DependencyProperty ItemsWidthProperty = DependencyProperty.Register(
-            "ItemsWidth",
-            typeof(double),
-            typeof(TileLayout),
-            new PropertyMetadata(0.0)
-        );
-
-        #endregion
-
-        #region Rows
-
-        public int Rows {
-            get => (int) GetValue(RowsProperty);
-            set => SetValue(RowsProperty, value);
-        }
-
-        public static readonly DependencyProperty RowsProperty = DependencyProperty.Register(
-            "Rows",
-            typeof(int),
-            typeof(TileLayout),
-            new PropertyMetadata(0)
-        );
-
-        #endregion
-
-        #region Columns
-
-        public int Columns {
-            get => (int) GetValue(ColumnsProperty);
-            set => SetValue(ColumnsProperty, value);
-        }
-
-        public static readonly DependencyProperty ColumnsProperty = DependencyProperty.Register(
-            "Columns",
-            typeof(int),
-            typeof(TileLayout),
-            new PropertyMetadata(0)
-        );
-
-        #endregion
-
-        #endregion
-
-        #region Override
 
         public override void OnApplyTemplate() {
             base.OnApplyTemplate();
+            // Try get inner grid
+            try {
+                TileGrid = ((Grid) GetVisualChild(0))!;
+            } catch (Exception e) {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
 
-            //TODO here
+        #region Property
+
+        public int RowCount { get; set; }
+        public int ColumnCount { get; set; }
+        public Thickness MarginThickness { get; set; }
+
+        internal List<LayoutItemData> ListData { get; set; }
+
+        public IEnumerable ItemSource {
+            get => (IEnumerable) GetValue(ItemSourceProperty);
+            set => SetValue(ItemSourceProperty, value);
+        }
+
+        public static readonly DependencyProperty ItemSourceProperty = DependencyProperty.Register(
+            "ItemSource",
+            typeof(IEnumerable),
+            typeof(TileLayout),
+            new UIPropertyMetadata(null, ItemDataPropertyChanged)
+        );
+
+        public DataTemplate ItemTemplateData {
+            get => (DataTemplate) GetValue(ItemTemplateDataProperty);
+            set => SetValue(ItemTemplateDataProperty, value);
+        }
+
+        public static readonly DependencyProperty ItemTemplateDataProperty = DependencyProperty.Register(
+            "ItemTemplateData",
+            typeof(DataTemplate),
+            typeof(TileLayout),
+            new UIPropertyMetadata(null, ItemTemplateDataPropertyChanged)
+        );
+
+        protected void ComputeChildren() {
+            for (var index = 0; index < ListData.Count; index++) {
+                ListData[index].Row = index    / ColumnCount;
+                ListData[index].Column = index % ColumnCount;
+            }
+        }
+
+        private void UpdateLayoutGrid() {
+            ListData = (ItemSource as IEnumerable<object> ?? new List<object>()).Select(item => new LayoutItemData {
+                Column = 0, Row = 0, Data = item
+            }).ToList();
+            RefreshColumnAndRow();
+            ComputeChildren();
+            ItemsSource = ListData;
+        }
+
+        protected void RefreshColumnAndRow() {
+            var neededRow = Math.Abs(TileGrid.RowDefinitions.Count - RowCount);
+            if (RowCount > TileGrid.RowDefinitions.Count)
+                for (var count = 0; count < neededRow; count++) {
+                    TileGrid.RowDefinitions.Add(new RowDefinition());
+                }
+            else
+                for (var count = 0; count < neededRow; count++) {
+                    TileGrid.RowDefinitions.RemoveAt(TileGrid.RowDefinitions.Count - 1);
+                }
+
+            var neededCol = Math.Abs(TileGrid.ColumnDefinitions.Count - RowCount);
+            if (ColumnCount > TileGrid.ColumnDefinitions.Count)
+                for (var count = 0; count < neededCol; count++) {
+                    TileGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                }
+            else
+                for (var count = 0; count < neededCol; count++) {
+                    TileGrid.ColumnDefinitions.RemoveAt(TileGrid.ColumnDefinitions.Count - 1);
+                }
         }
 
         #endregion
 
-        #region Internal Methods
-
-        internal void CalculateColumns() {
-            var width = ActualWidth;
-            var height = ActualHeight;
+        private static void ItemDataPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            var layout = (TileLayout) d;
+            layout.ItemSource = (IEnumerable<object>) e.NewValue;
+            layout.UpdateLayoutGrid();
         }
 
-        #endregion
+        private static void ItemTemplateDataPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            var layout = (TileLayout) d;
+            layout.ItemTemplateData = (DataTemplate) e.NewValue;
+            layout.UpdateLayoutGrid();
+        }
+    }
 
-        #region Events
+    internal class LayoutItemData {
+        public LayoutItemData(object data, int row, int column) {
+            Data = data;
+            Row = row;
+            Column = column;
+        }
 
-        #endregion
+        public LayoutItemData() {
+            Data = new object();
+        }
 
-        #region Data
-
-        private ItemCollection _item;
-        private ItemContainerGenerator _itemContainerGenerator;
-        private Panel _itemsHost;
-        private ScrollViewer _scrollHost;
-
-        #endregion
+        public object Data { get; set; }
+        public int Row { get; set; }
+        public int Column { get; set; }
     }
 }

@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:layout="clr-namespace:ControlLib.Components.Layout"
+                    xmlns:reveal="clr-namespace:ControlLib.Libs.Reveal">
+    <Style TargetType="{x:Type layout:TileLayout}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <ItemsPresenter />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Viewbox DataContext="{Binding}" reveal:PointerTracker.Enabled="True"
+                             ScrollViewer.VerticalScrollBarVisibility="Disabled" SnapsToDevicePixels="True"
+                             RenderTransformOrigin="0.5,0.5">
+                        <ContentControl
+                            Content="{Binding Path=Data}"
+                            ContentTemplate="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=layout:TileLayout}, Path=ItemTemplateData}" />
+                    </Viewbox>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Grid.Row" Value="{Binding (layout:LayoutItemData.Row)}" />
+                    <Setter Property="Grid.Column" Value="{Binding (layout:LayoutItemData.Column)}" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <Grid x:Name="TileGrid"  reveal:PointerTracker.Enabled="True"
+                          Margin="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=layout:TileLayout}, Path=MarginThickness}"
+                          Row="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=layout:TileLayout}, Path=RowCount}"
+                          Column="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=layout:TileLayout}, Path=ColumnCount}" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

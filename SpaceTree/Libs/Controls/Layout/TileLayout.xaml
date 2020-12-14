@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="SpaceTree.Libs.Controls.Layout.TileLayout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:layout="clr-namespace:SpaceTree.Libs.Controls.Layout"
+             xmlns:reveal="clr-namespace:ControlLib.Libs.Reveal;assembly=ControlLib"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="300">
+    <Grid>
+        <ItemsControl x:Name="InnerItemsControl" ItemsSource="{Binding (layout:TileLayout.ListData)}">
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer Margin="0" VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerStyle}">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Viewbox DataContext="{Binding}"
+                             ScrollViewer.VerticalScrollBarVisibility="Disabled" SnapsToDevicePixels="True"
+                             RenderTransformOrigin="0.5, 0.5"
+                             Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=layout:TileLayout}, Path=ItemHeight}"
+                             Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=layout:TileLayout}, Path=ItemWidth}">
+                        <ContentControl
+                            Content="{Binding Path=Data}"
+                            ContentTemplate="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=layout:TileLayout}, Path=ItemTemplateData}" />
+                    </Viewbox>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Grid.Row" Value="{Binding (layout:LayoutItemData.Row)}" />
+                    <Setter Property="Grid.Column" Value="{Binding (layout:LayoutItemData.Column)}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid Name="TileLayoutGrid" Loaded="GridLoaded" reveal:PointerTracker.Enabled="True"
+                          Margin="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=layout:TileLayout}, Path=MarginThickness}"
+                          Row="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=layout:TileLayout}, Path=RowCount}"
+                          Column="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=layout:TileLayout}, Path=ColumnCount}"
+                          VerticalAlignment="Top" HorizontalAlignment="Stretch" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Grid>
+</UserControl>

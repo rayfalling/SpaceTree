@@ -5,8 +5,11 @@
         <ResourceDictionary Source="/ControlLib;component/Styles/Text/TextBlock.xaml" />
         <ResourceDictionary Source="/ControlLib;component/Styles/Text/TextBox.xaml" />
         <ResourceDictionary Source="/ControlLib;component/Styles/Button/Button.xaml" />
+        <ResourceDictionary Source="/ControlLib;component/Styles/Layout/ScrollViewer.xaml" />
         <ResourceDictionary Source="/ControlLib;component/Styles/Layout/Panel.xaml" />
+        <ResourceDictionary Source="/ControlLib;component/Styles/Layout/TileLayout.xaml" />
         <ResourceDictionary Source="/ControlLib;component/Styles/Menu/Menu.xaml" />
+        <ResourceDictionary Source="/ControlLib;component/Styles/Window/Popup.xaml" />
         <ResourceDictionary Source="/ControlLib;component/Styles/Window/Window.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
