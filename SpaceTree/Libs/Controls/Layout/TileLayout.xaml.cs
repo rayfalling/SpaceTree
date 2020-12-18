@@ -119,7 +119,9 @@ namespace SpaceTree.Libs.Controls.Layout {
             var properColumn = (int) (ActualWidth / ItemWidth);
             var properRow = (count / properColumn) + (count % properColumn == 0 ? 0 : 1);
             var padding = (int) ((ActualWidth - ItemWidth * properColumn) / 2);
-            MarginThickness = new Thickness(padding, 0, padding, 0);
+            MarginThickness = ListData.Count < properColumn
+                ? new Thickness(0, 0, padding * 2, 0)
+                : new Thickness(padding, 0, padding, 0);
             RowCount = properRow;
             ColumnCount = properColumn;
             if (LayoutGrid != null) LayoutGrid.Margin = MarginThickness;
@@ -128,7 +130,8 @@ namespace SpaceTree.Libs.Controls.Layout {
         private void SetChildrenStyle() {
             if (ColumnCount == 0) return;
             var tempList = ListData.Select(
-                (t, index) => new LayoutItemData {Data = t.Data, Row = index / ColumnCount, Column = index % ColumnCount,}
+                (t, index) => new LayoutItemData
+                    {Data = t.Data, Row = index / ColumnCount, Column = index % ColumnCount,}
             ).ToList();
             ListData = new ObservableCollection<LayoutItemData>(tempList);
         }
